@@ -9,6 +9,10 @@
 
 #![warn(missing_docs)]
 
-pub mod fields;
+pub mod document;
+pub mod field;
+pub mod form;
 
-pub use fields::{FieldDefinition, FieldType};
+pub use document::Document;
+pub use field::{FieldBuilder, FieldDefinition, FieldType};
+pub use form::{FormBuilder, FormDefinition};

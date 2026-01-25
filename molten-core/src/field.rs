@@ -132,7 +132,7 @@ impl TryFrom<FieldBuilder> for FieldDefinition {
 ///
 /// # Examples
 /// ```
-/// use molten_core::fields::{FieldBuilder, FieldType};
+/// use molten_core::field::{FieldBuilder, FieldType};
 ///
 /// let field = FieldBuilder::new(
 ///     "age",
@@ -184,17 +184,7 @@ impl FieldBuilder {
 
     /// Creates a validated FieldDefinition entity using the builder pattern
     pub fn build(self) -> Result<FieldDefinition, validator::ValidationErrors> {
-        let def = FieldDefinition {
-            id: self.id,
-            label: self.label,
-            field_type: self.field_type,
-            required: self.required,
-            description: self.description,
-        };
-
-        // Run validation exactly once at the end
-        def.validate()?;
-        Ok(def)
+        FieldDefinition::try_from(self)
     }
 }
 
