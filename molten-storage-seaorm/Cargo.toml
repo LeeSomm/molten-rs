@@ -1,0 +1,12 @@
+[package]
+name = "molten-storage-seaorm"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+description = "SeaORM database persistence implementation for Molten"
+repository = "https://github.com/LeeSomm/molten-rs"
+documentation = "https://docs.rs/molten-storage-seaorm"
+homepage = "https://github.com/LeeSomm/molten-rs"
+
+
+[dependencies]

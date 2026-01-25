@@ -1,0 +1,11 @@
+[package]
+name = "molten-api"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+description = "Axum-based REST API for the Molten document and workflow management system"
+repository = "https://github.com/LeeSomm/molten-rs"
+documentation = "https://docs.rs/molten-api"
+homepage = "https://github.com/LeeSomm/molten-rs"
+
+[dependencies]

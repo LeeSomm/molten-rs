@@ -1,0 +1,12 @@
+[package]
+name = "molten-workflow"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+description = "Workflow state machine engine and transition management for Molten"
+repository = "https://github.com/LeeSomm/molten-rs"
+documentation = "https://docs.rs/molten-workflow"
+homepage = "https://github.com/LeeSomm/molten-rs"
+
+
+[dependencies]

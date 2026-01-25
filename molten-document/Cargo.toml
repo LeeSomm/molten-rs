@@ -1,0 +1,11 @@
+[package]
+name = "molten-document"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+description = "Document schema definitions, field types, and validation for Molten"
+repository = "https://github.com/LeeSomm/molten-rs"
+documentation = "https://docs.rs/molten-document"
+homepage = "https://github.com/LeeSomm/molten-rs"
+
+[dependencies]

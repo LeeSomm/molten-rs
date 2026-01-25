@@ -1,0 +1,11 @@
+[package]
+name = "molten"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+description = "A configurable document and workflow management system"
+repository = "https://github.com/LeeSomm/molten-rs"
+documentation = "https://docs.rs/molten"
+homepage = "https://github.com/LeeSomm/molten-rs"
+
+[dependencies]

@@ -1,0 +1,12 @@
+[package]
+name = "molten-service"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+description = "Application orchestration and business logic layer for Molten"
+repository = "https://github.com/LeeSomm/molten-rs"
+documentation = "https://docs.rs/molten-service"
+homepage = "https://github.com/LeeSomm/molten-rs"
+
+
+[dependencies]

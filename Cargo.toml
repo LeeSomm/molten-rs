@@ -1,0 +1,3 @@
+[workspace]
+resolver = "3"
+members = ["molten","molten-api", "molten-config", "molten-core","molten-document", "molten-service", "molten-storage-seaorm", "molten-workflow"]
