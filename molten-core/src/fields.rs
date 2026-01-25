@@ -89,11 +89,21 @@ pub struct FieldDefinition {
 }
 
 impl FieldDefinition {
-    pub fn id(&self) -> &str { &self.id }
-    pub fn label(&self) -> &str { &self.label }
-    pub fn field_type(&self) -> &FieldType { &self.field_type }
-    pub fn is_required(&self) -> bool { self.required }
-    pub fn description(&self) -> Option<&str> { self.description.as_deref() }
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+    pub fn label(&self) -> &str {
+        &self.label
+    }
+    pub fn field_type(&self) -> &FieldType {
+        &self.field_type
+    }
+    pub fn is_required(&self) -> bool {
+        self.required
+    }
+    pub fn description(&self) -> Option<&str> {
+        self.description.as_deref()
+    }
 }
 
 impl TryFrom<FieldBuilder> for FieldDefinition {
@@ -181,7 +191,7 @@ impl FieldBuilder {
             required: self.required,
             description: self.description,
         };
-        
+
         // Run validation exactly once at the end
         def.validate()?;
         Ok(def)
@@ -283,7 +293,8 @@ mod tests {
             }
         });
 
-        let field: FieldDefinition = serde_json::from_value(json_input).expect("Field definition should be valid");
+        let field: FieldDefinition =
+            serde_json::from_value(json_input).expect("Field definition should be valid");
 
         assert_eq!(field.required, false); // Default is false
 
@@ -308,14 +319,15 @@ mod tests {
         assert!(result.is_ok());
 
         // 2. Invalid JSON (ID exceeds length constraint)
-        let long_id = "this_id_is_way_too_long_to_pass_validation_rules_that_we_set_at_sixty_four_characters"; 
+        let long_id =
+            "this_id_is_way_too_long_to_pass_validation_rules_that_we_set_at_sixty_four_characters";
         let invalid_json = json!({
             "id": long_id,
             "label": "Invalid ID",
             "field_type": { "type": "text" }
         });
         let result: Result<FieldDefinition, _> = serde_json::from_value(invalid_json);
-        
+
         assert!(result.is_err());
         let err = result.unwrap_err();
         // Is it an input data-related error?
@@ -332,7 +344,7 @@ mod tests {
             "field_type": { "type": "text" }
         });
         let result: Result<FieldDefinition, _> = serde_json::from_value(invalid_json);
-        
+
         assert!(result.is_err());
         let err = result.unwrap_err();
         // Is it an input data-related error?

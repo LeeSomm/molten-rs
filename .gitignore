@@ -1,6 +1,5 @@
 # Cargo build artifacts
-/target/
-/**/target/
+/target
 
 # Build output from rust-analyzer
 /.rust-analyzer/

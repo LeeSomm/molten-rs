@@ -1,5 +1,0 @@
-/home/lee/molten-rs/target/debug/deps/molten_document-18adbb362d4fdcfd.d: molten-document/src/lib.rs
-
-/home/lee/molten-rs/target/debug/deps/libmolten_document-18adbb362d4fdcfd.rmeta: molten-document/src/lib.rs
-
-molten-document/src/lib.rs:
