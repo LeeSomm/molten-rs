@@ -1,1 +1,1 @@
-/home/lee/molten/target/debug/libmolten_service.rlib: /home/lee/molten/molten-service/src/lib.rs
+/home/lee/molten-rs/target/debug/libmolten_service.rlib: /home/lee/molten-rs/target/package/molten-service-0.0.1/src/lib.rs

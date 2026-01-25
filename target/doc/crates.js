@@ -1,2 +1,2 @@
-window.ALL_CRATES = ["molten","molten_api","molten_config","molten_core","molten_document","molten_service","molten_storage_seaorm","molten_workflow"];
-//{"start":21,"fragment_lengths":[8,13,16,14,18,17,24,18]}
+window.ALL_CRATES = ["chrono","iana_time_zone","itoa","memchr","molten","molten_api","molten_config","molten_core","molten_document","molten_service","molten_storage_seaorm","molten_workflow","num_traits","proc_macro2","quote","serde","serde_core","serde_derive","serde_json","syn","thiserror","thiserror_impl","unicode_ident","zmij"];
+//{"start":21,"fragment_lengths":[8,17,7,9,9,13,16,14,18,17,24,18,13,14,8,8,13,15,13,6,12,17,16,7]}

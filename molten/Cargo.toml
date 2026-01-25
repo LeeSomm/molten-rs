@@ -9,3 +9,9 @@ documentation = "https://docs.rs/molten"
 homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
+molten-config = "0.0.1"
+molten-core = "0.0.1"
+molten-document = "0.0.1"
+molten-service = "0.0.1"
+molten-storage-seaorm = "0.0.1"
+molten-workflow = "0.0.1"

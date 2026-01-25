@@ -1,0 +1,17 @@
+# Cargo build artifacts
+/target/
+/**/target/
+
+# Build output from rust-analyzer
+/.rust-analyzer/
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Private Markdown files
+dev_*.md
