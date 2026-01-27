@@ -7,3 +7,9 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
+
+pub mod error;
+pub mod validator;
+
+pub use error::DocumentValidationError;
+pub use validator::validate_document;

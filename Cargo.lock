@@ -389,6 +389,13 @@ checksum = "ad915b18ada2a16bc5d089ab46ce52be15a0139c81dbb80da258defd11650b1b"
 [[package]]
 name = "molten-document"
 version = "0.0.1"
+dependencies = [
+ "chrono",
+ "molten-core 0.0.1",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
 
 [[package]]
 name = "molten-document"

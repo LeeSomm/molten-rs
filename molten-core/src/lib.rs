@@ -12,7 +12,9 @@
 pub mod document;
 pub mod field;
 pub mod form;
+pub mod workflow;
 
 pub use document::Document;
 pub use field::{FieldBuilder, FieldDefinition, FieldType};
 pub use form::{FormBuilder, FormDefinition};
+pub use workflow::{Phase, Transition, WorkflowDefinition};
