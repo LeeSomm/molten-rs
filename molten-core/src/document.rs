@@ -18,6 +18,13 @@ pub struct Document {
     #[validate(length(min = 1, max = 64))]
     pub form_id: String,
 
+    /// Links this document to a specific Workflow Definition
+    #[validate(length(min = 1, max = 64))]
+    pub workflow_id: String,
+
+    /// Links this document to a specific Phase
+    pub current_phase: String,
+
     /// The generic data payload.
     /// Key: Field ID (e.g., "incident_date")
     /// Value: The user input (String, Number, Boolean, etc.)
@@ -35,11 +42,13 @@ pub struct Document {
 
 impl Document {
     /// Creates a new, empty document for a specific form.
-    pub fn new(id: &str, form_id: &str) -> Self {
+    pub fn new(id: &str, form_id: &str, workflow_id: &str) -> Self {
         let now = Utc::now();
         Self {
             id: id.to_string(),
             form_id: form_id.to_string(),
+            workflow_id: workflow_id.to_string(),
+            current_phase: "".to_string(),
             data: HashMap::new(),
             created_at: now,
             updated_at: now,
@@ -65,7 +74,7 @@ mod tests {
 
     #[test]
     fn test_document_creation() {
-        let mut doc = Document::new("doc_123", "incident_report");
+        let mut doc = Document::new("doc_123", "incident_report", "flow_123");
 
         // Simulate user input
         doc.set_value("title", json!("Server Crash"));
@@ -77,7 +86,7 @@ mod tests {
 
     #[test]
     fn test_serialization() {
-        let mut doc = Document::new("doc_1", "form_1");
+        let mut doc = Document::new("doc_1", "form_1", "flow_1");
         doc.set_value("active", json!(true));
 
         let json_output = serde_json::to_string(&doc).unwrap();

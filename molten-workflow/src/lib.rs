@@ -7,3 +7,8 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
+pub mod engine;
+pub mod error;
+
+pub use engine::transition;
+pub use error::WorkflowError;

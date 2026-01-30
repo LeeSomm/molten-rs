@@ -234,7 +234,7 @@ mod tests {
     #[test]
     fn test_valid_document() {
         let form = create_test_form();
-        let mut doc = Document::new("doc1", "ticket");
+        let mut doc = Document::new("doc1", "ticket", "flow_ticket");
         doc.set_value("title", json!("Server Down"));
         doc.set_value("severity", json!(3));
         doc.set_value("status", json!("Open"));
@@ -245,7 +245,7 @@ mod tests {
     #[test]
     fn test_missing_required() {
         let form = create_test_form();
-        let doc = Document::new("doc1", "ticket");
+        let doc = Document::new("doc1", "ticket", "flow_ticket");
         // "title" is missing!
 
         let res = validate_document(&doc, &form);
@@ -260,7 +260,7 @@ mod tests {
     #[test]
     fn test_type_mismatch() {
         let form = create_test_form();
-        let mut doc = Document::new("doc1", "ticket");
+        let mut doc = Document::new("doc1", "ticket", "flow_ticket");
         doc.set_value("title", json!("Valid"));
         doc.set_value("severity", json!("Five")); // String instead of Number
 
@@ -272,7 +272,7 @@ mod tests {
     #[test]
     fn test_number_range() {
         let form = create_test_form();
-        let mut doc = Document::new("doc1", "ticket");
+        let mut doc = Document::new("doc1", "ticket", "flow_ticket");
         doc.set_value("title", json!("Valid"));
         doc.set_value("severity", json!(10)); // Max is 5!
 
@@ -287,7 +287,7 @@ mod tests {
     #[test]
     fn test_select_options() {
         let form = create_test_form();
-        let mut doc = Document::new("doc1", "ticket");
+        let mut doc = Document::new("doc1", "ticket", "flow_ticket");
         doc.set_value("title", json!("Valid"));
         doc.set_value("status", json!("In Progress")); // Not in ["Open", "Closed"]
 

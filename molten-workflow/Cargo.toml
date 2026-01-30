@@ -10,3 +10,6 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 
 [dependencies]
+molten-core = { path = "../molten-core" }
+serde = "1.0.228"
+thiserror = "2.0.18"

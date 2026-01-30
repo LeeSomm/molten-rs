@@ -81,6 +81,8 @@ pub struct FieldDefinition {
     field_type: FieldType,
 
     /// If `true`, the document validation will fail if this field is missing or null.
+    /// Applied globally to this field. For field requirements conditional on phase
+    /// transitions, see documentation for [`crate::workflow::Transition`]
     required: bool,
 
     /// An optional tooltip or help text to guide the user.
@@ -89,18 +91,23 @@ pub struct FieldDefinition {
 }
 
 impl FieldDefinition {
+    /// Getter method to obtain Field ID
     pub fn id(&self) -> &str {
         &self.id
     }
+    /// Getter method to obtain Field Label
     pub fn label(&self) -> &str {
         &self.label
     }
+    /// Getter method to obtain Field Type
     pub fn field_type(&self) -> &FieldType {
         &self.field_type
     }
+    /// Getter method to return whether a field is required
     pub fn is_required(&self) -> bool {
         self.required
     }
+    /// Getter method to obtain Field Description
     pub fn description(&self) -> Option<&str> {
         self.description.as_deref()
     }

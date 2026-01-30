@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::convert::TryFrom;
 use validator::{Validate, ValidationError};
 
@@ -62,6 +62,11 @@ pub struct Transition {
     pub to: String,
     // Future expansion: We will add "guards" or "permissions" here later.
     // e.g., pub required_role: Option<String>
+
+    // TODO: Add required_fields for a transition to be valid.
+    // This is different from the global is_required in Field definition
+    // #[serde(default)]
+    // pub required_fields: Vec<String>,
 }
 
 impl Transition {
