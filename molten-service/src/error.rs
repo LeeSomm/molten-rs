@@ -1,6 +1,6 @@
-use thiserror::Error;
 use molten_document::DocumentValidationError;
 use molten_workflow::WorkflowError;
+use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ServiceError {

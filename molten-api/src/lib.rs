@@ -11,8 +11,8 @@ pub mod handler;
 pub mod state;
 
 use axum::{
-    routing::{get, post},
     Router,
+    routing::{get, post},
 };
 use sea_orm::DatabaseConnection;
 use state::AppState;

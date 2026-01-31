@@ -16,7 +16,7 @@ use molten_core::workflow::WorkflowDefinition;
 use std::path::Path;
 
 pub use error::ConfigError;
-pub use parser::{load_from_file, parse_content, ConfigFormat};
+pub use parser::{ConfigFormat, load_from_file, parse_content};
 
 // -----------------------------------------------------------------------------
 // Convenience Helpers

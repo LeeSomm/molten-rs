@@ -46,11 +46,11 @@ impl DocumentService {
 
         // 2. Determine Start Phase
         // Every workflow must have exactly one "Start" phase.
-        let start_phase = workflow
-            .get_start_phase()
-            .ok_or_else(|| ServiceError::WorkflowRuleViolation(
-                molten_workflow::WorkflowError::UnknownPhase("No start phase defined".into())
-            ))?;
+        let start_phase = workflow.get_start_phase().ok_or_else(|| {
+            ServiceError::WorkflowRuleViolation(molten_workflow::WorkflowError::UnknownPhase(
+                "No start phase defined".into(),
+            ))
+        })?;
 
         // 3. Construct the Document
         // We generate a UUID here (or you could let the DB do it, but application-side is usually easier).
@@ -78,9 +78,9 @@ impl DocumentService {
         DocumentRepository::find_by_id(&self.db, id)
             .await
             .map_err(ServiceError::Internal)?
-            .ok_or_else(|| ServiceError::Internal(anyhow::anyhow!("Document not found"))) 
-            // Note: In a real API, you'd want a specific NotFound error code
+            .ok_or_else(|| ServiceError::Internal(anyhow::anyhow!("Document not found")))
+        // Note: In a real API, you'd want a specific NotFound error code
     }
-    
+
     // Future: We will add `transition_document` here later
 }

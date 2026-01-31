@@ -1,8 +1,8 @@
 use crate::error::ConfigError;
 use serde::de::DeserializeOwned;
-use validator::Validate;
-use std::path::Path;
 use std::fs;
+use std::path::Path;
+use validator::Validate;
 
 /// Supported configuration formats.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -35,9 +35,7 @@ where
     let content = fs::read_to_string(path)
         .map_err(|e| ConfigError::FileReadError(path.display().to_string(), e))?;
 
-    let ext = path.extension()
-        .and_then(|s| s.to_str())
-        .unwrap_or("");
+    let ext = path.extension().and_then(|s| s.to_str()).unwrap_or("");
 
     let format = ConfigFormat::from_extension(ext)
         .ok_or_else(|| ConfigError::UnknownFormat(ext.to_string()))?;
@@ -58,8 +56,8 @@ where
     };
 
     // 2. Validate (This triggers the logic in molten-core)
-    // Note: If you used `#[serde(try_from)]` in molten-core, basic validation 
-    // already happened during step 1. But explicit calling here covers structs 
+    // Note: If you used `#[serde(try_from)]` in molten-core, basic validation
+    // already happened during step 1. But explicit calling here covers structs
     // that might use simple `derive(Validate)`.
     entity.validate().map_err(ConfigError::ValidationError)?;
 
@@ -69,8 +67,8 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use molten_core::form::FormDefinition;
-    use molten_core::field::{FieldType, FieldDefinition}; // Just to ensure types exist
+    use molten_core::field::{FieldDefinition, FieldType};
+    use molten_core::form::FormDefinition; // Just to ensure types exist
 
     // A sample valid YAML form
     const VALID_YAML_FORM: &str = r#"
@@ -92,9 +90,9 @@ fields:
 
     #[test]
     fn test_parse_yaml_form() {
-        let form: FormDefinition = parse_content(VALID_YAML_FORM, ConfigFormat::Yaml)
-            .expect("Should parse valid YAML");
-        
+        let form: FormDefinition =
+            parse_content(VALID_YAML_FORM, ConfigFormat::Yaml).expect("Should parse valid YAML");
+
         assert_eq!(form.id(), "incident_report");
         assert_eq!(form.fields().len(), 2);
     }
@@ -111,9 +109,9 @@ fields:
             ]
         }"#;
 
-        let form: FormDefinition = parse_content(json_form, ConfigFormat::Json)
-            .expect("Should parse valid JSON");
-        
+        let form: FormDefinition =
+            parse_content(json_form, ConfigFormat::Json).expect("Should parse valid JSON");
+
         assert_eq!(form.id(), "incident_report");
     }
 
@@ -125,8 +123,9 @@ id: "incident report"
 name: Report
 fields: []
 "#;
-        let res: Result<FormDefinition, ConfigError> = parse_content(invalid_yaml, ConfigFormat::Yaml);
-        
+        let res: Result<FormDefinition, ConfigError> =
+            parse_content(invalid_yaml, ConfigFormat::Yaml);
+
         assert!(res.is_err());
         // The error should come from the underlying validation logic
         let err_msg = res.unwrap_err().to_string();

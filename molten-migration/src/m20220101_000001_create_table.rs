@@ -39,7 +39,12 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table(Workflows::Table)
                     .if_not_exists()
-                    .col(ColumnDef::new(Workflows::Id).string().not_null().primary_key())
+                    .col(
+                        ColumnDef::new(Workflows::Id)
+                            .string()
+                            .not_null()
+                            .primary_key(),
+                    )
                     .col(ColumnDef::new(Workflows::Name).string().not_null())
                     // Store the graph as JSONB
                     .col(ColumnDef::new(Workflows::Graph).json_binary().not_null())
@@ -65,18 +70,20 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table(Documents::Table)
                     .if_not_exists()
-                    .col(ColumnDef::new(Documents::Id).string().not_null().primary_key())
-                    // Foreign Keys are loose for now to allow soft-deletes of config, 
+                    .col(
+                        ColumnDef::new(Documents::Id)
+                            .string()
+                            .not_null()
+                            .primary_key(),
+                    )
+                    // Foreign Keys are loose for now to allow soft-deletes of config,
                     // but we index them for speed.
                     .col(ColumnDef::new(Documents::FormId).string().not_null())
                     .col(ColumnDef::new(Documents::WorkflowId).string().not_null())
-                    
                     // Promoted column for fast status checks
                     .col(ColumnDef::new(Documents::CurrentPhase).string().not_null())
-                    
                     // The dynamic data payload
                     .col(ColumnDef::new(Documents::Data).json_binary().not_null())
-                    
                     .col(
                         ColumnDef::new(Documents::CreatedAt)
                             .timestamp_with_time_zone()
@@ -113,13 +120,18 @@ impl MigrationTrait for Migration {
                     .to_owned(),
             )
             .await
-
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        manager.drop_table(Table::drop().table(Documents::Table).to_owned()).await?;
-        manager.drop_table(Table::drop().table(Workflows::Table).to_owned()).await?;
-        manager.drop_table(Table::drop().table(Forms::Table).to_owned()).await
+        manager
+            .drop_table(Table::drop().table(Documents::Table).to_owned())
+            .await?;
+        manager
+            .drop_table(Table::drop().table(Workflows::Table).to_owned())
+            .await?;
+        manager
+            .drop_table(Table::drop().table(Forms::Table).to_owned())
+            .await
     }
 }
 

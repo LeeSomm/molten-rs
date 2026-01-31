@@ -1,7 +1,7 @@
 use crate::{error::ApiError, state::AppState};
 use axum::{
-    extract::{Path, State},
     Json,
+    extract::{Path, State},
 };
 use molten_core::document::Document;
 use serde::{Deserialize, Serialize};
@@ -21,8 +21,8 @@ pub async fn create_document(
     State(state): State<AppState>,
     Json(payload): Json<CreateDocumentRequest>,
 ) -> Result<Json<Document>, ApiError> {
-    
-    let doc = state.service
+    let doc = state
+        .service
         .create_document(&payload.form_id, &payload.workflow_id, payload.data)
         .await?;
 
@@ -34,7 +34,6 @@ pub async fn get_document(
     State(state): State<AppState>,
     Path(id): Path<String>,
 ) -> Result<Json<Document>, ApiError> {
-    
     let doc = state.service.get_document(&id).await?;
     Ok(Json(doc))
 }
