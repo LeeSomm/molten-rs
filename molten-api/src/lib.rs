@@ -5,5 +5,26 @@
 //!
 //! This crate is under active development and is not yet stable.
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
-
 #![warn(missing_docs)]
+pub mod error;
+pub mod handler;
+pub mod state;
+
+use axum::{
+    routing::{get, post},
+    Router,
+};
+use sea_orm::DatabaseConnection;
+use state::AppState;
+
+/// Creates the Axum router with all routes and state attached.
+/// This function is now testable without starting a real TCP listener.
+pub fn create_app(db: DatabaseConnection) -> Router {
+    let state = AppState::new(db);
+
+    Router::new()
+        .route("/health", get(|| async { "OK" }))
+        .route("/documents", post(handler::create_document))
+        .route("/documents/{id}", get(handler::get_document))
+        .with_state(state)
+}

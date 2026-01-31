@@ -9,3 +9,24 @@ documentation = "https://docs.rs/molten-api"
 homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
+# Internal Crates
+molten-core = { path = "../molten-core" }
+molten-service = { path = "../molten-service" }
+molten-storage-seaorm = { path = "../molten-storage-seaorm" }
+molten-config = { path = "../molten-config" }
+molten-migration = { path = "../molten-migration" }
+
+# Web Framework
+axum = { version = "0.8.8", features = ["macros"] }
+tokio = { version = "1.49.0", features = ["full"] }
+tower-http = { version = "0.6.8", features = ["trace", "cors"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
+
+# Data & DB
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sea-orm = { version = "1.1.19", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros"] }
+dotenvy = "0.15.7" # To load .env file
+anyhow = "1.0.100"
+

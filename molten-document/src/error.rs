@@ -1,6 +1,7 @@
+use serde::{Serialize, Deserialize};
 use thiserror::Error;
 
-#[derive(Error, Debug, PartialEq)]
+#[derive(Error, Debug, PartialEq, Serialize, Deserialize)]
 pub enum DocumentValidationError {
     #[error("Field '{0}' is required but was missing or null")]
     MissingRequiredField(String),
