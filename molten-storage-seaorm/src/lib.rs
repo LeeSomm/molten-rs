@@ -8,3 +8,5 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
+pub mod entities;
+pub mod repo;
