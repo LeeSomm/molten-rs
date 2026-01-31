@@ -8,3 +8,26 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
+pub mod error;
+pub mod parser;
+
+use molten_core::form::FormDefinition;
+use molten_core::workflow::WorkflowDefinition;
+use std::path::Path;
+
+pub use error::ConfigError;
+pub use parser::{load_from_file, parse_content, ConfigFormat};
+
+// -----------------------------------------------------------------------------
+// Convenience Helpers
+// -----------------------------------------------------------------------------
+
+/// Helper to specifically load a Form Definition from a file.
+pub fn load_form(path: impl AsRef<Path>) -> Result<FormDefinition, ConfigError> {
+    load_from_file(path.as_ref())
+}
+
+/// Helper to specifically load a Workflow Definition from a file.
+pub fn load_workflow(path: impl AsRef<Path>) -> Result<WorkflowDefinition, ConfigError> {
+    load_from_file(path.as_ref())
+}
