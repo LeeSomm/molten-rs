@@ -1574,6 +1574,7 @@ version = "0.0.1"
 dependencies = [
  "anyhow",
  "chrono",
+ "molten-config 0.0.1",
  "molten-core 0.0.1",
  "molten-document 0.0.1",
  "molten-storage-seaorm 0.0.1",
@@ -1583,6 +1584,7 @@ dependencies = [
  "serde_json",
  "thiserror",
  "uuid",
+ "validator",
 ]
 
 [[package]]

@@ -14,7 +14,10 @@ pub enum ServiceError {
     WorkflowNotFound(String),
 
     #[error("Document validation failed: {0:?}")]
-    ValidationErrors(Vec<DocumentValidationError>),
+    DocumentValidationErrors(Vec<DocumentValidationError>),
+
+    #[error("Form validation failed: {0:?}")]
+    FormValidationErrors(validator::ValidationErrors),
 
     #[error("Workflow violation: {0}")]
     WorkflowRuleViolation(#[from] WorkflowError),

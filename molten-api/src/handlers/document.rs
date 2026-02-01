@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 
-// DTO: What the client sends us
 #[derive(Deserialize)]
 pub struct CreateDocumentRequest {
     pub form_id: String,
@@ -22,7 +21,7 @@ pub async fn create_document(
     Json(payload): Json<CreateDocumentRequest>,
 ) -> Result<Json<Document>, ApiError> {
     let doc = state
-        .service
+        .document_service
         .create_document(&payload.form_id, &payload.workflow_id, payload.data)
         .await?;
 
@@ -34,6 +33,6 @@ pub async fn get_document(
     State(state): State<AppState>,
     Path(id): Path<String>,
 ) -> Result<Json<Document>, ApiError> {
-    let doc = state.service.get_document(&id).await?;
+    let doc = state.document_service.get_document(&id).await?;
     Ok(Json(doc))
 }

@@ -1,4 +1,7 @@
-use molten_service::DocumentService;
+use molten_service::{
+    DocumentService,
+    form_service::{self, FormService},
+};
 use sea_orm::DatabaseConnection;
 use std::sync::Arc;
 
@@ -6,14 +9,17 @@ use std::sync::Arc;
 /// We wrap it in Arc for cheap cloning across threads.
 #[derive(Clone)]
 pub struct AppState {
-    pub service: Arc<DocumentService>,
+    pub document_service: Arc<DocumentService>,
+    pub form_service: Arc<FormService>,
 }
 
 impl AppState {
     pub fn new(db: DatabaseConnection) -> Self {
-        let service = DocumentService::new(db);
+        let document_service = DocumentService::new(db.clone());
+        let form_service = FormService::new(db.clone());
         Self {
-            service: Arc::new(service),
+            document_service: Arc::new(document_service),
+            form_service: Arc::new(form_service),
         }
     }
 }

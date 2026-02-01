@@ -62,7 +62,7 @@ impl DocumentService {
         // 4. Validate Data
         // This runs the engine we built in Task 2.1
         if let Err(validation_errors) = validate_document(&doc, &form) {
-            return Err(ServiceError::ValidationErrors(validation_errors));
+            return Err(ServiceError::DocumentValidationErrors(validation_errors));
         }
 
         // 5. Persist
@@ -79,7 +79,7 @@ impl DocumentService {
             .await
             .map_err(ServiceError::Internal)?
             .ok_or_else(|| ServiceError::Internal(anyhow::anyhow!("Document not found")))
-        // Note: In a real API, you'd want a specific NotFound error code
+        // TODO: Implement specific NotFound error code
     }
 
     // Future: We will add `transition_document` here later

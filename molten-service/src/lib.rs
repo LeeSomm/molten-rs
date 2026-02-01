@@ -10,6 +10,7 @@
 #![warn(missing_docs)]
 pub mod document_service;
 pub mod error;
+pub mod form_service;
 
 pub use document_service::DocumentService;
 pub use error::ServiceError;

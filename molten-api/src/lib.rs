@@ -7,7 +7,7 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 #![warn(missing_docs)]
 pub mod error;
-pub mod handler;
+pub mod handlers;
 pub mod state;
 
 use axum::{
@@ -24,7 +24,8 @@ pub fn create_app(db: DatabaseConnection) -> Router {
 
     Router::new()
         .route("/health", get(|| async { "OK" }))
-        .route("/documents", post(handler::create_document))
-        .route("/documents/{id}", get(handler::get_document))
+        .route("/documents", post(handlers::create_document))
+        .route("/documents/{id}", get(handlers::get_document))
+        .route("/forms", post(handlers::create_form))
         .with_state(state)
 }

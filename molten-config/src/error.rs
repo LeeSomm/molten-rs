@@ -18,5 +18,5 @@ pub enum ConfigError {
     TomlError(#[from] toml::de::Error),
 
     #[error("Validation failed: {0}")]
-    ValidationError(#[from] validator::ValidationErrors),
+    ValidationErrors(#[from] validator::ValidationErrors),
 }

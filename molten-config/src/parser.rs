@@ -44,6 +44,9 @@ where
 }
 
 /// Parses string content directly. Useful for API payloads or tests.
+///
+/// # Type Parameters
+/// * `T`: The struct to parse (e.g., `FormDefinition`). Must implement `Deserialize` and `Validate`.
 pub fn parse_content<T>(content: &str, format: ConfigFormat) -> Result<T, ConfigError>
 where
     T: DeserializeOwned + Validate,
@@ -59,7 +62,7 @@ where
     // Note: If you used `#[serde(try_from)]` in molten-core, basic validation
     // already happened during step 1. But explicit calling here covers structs
     // that might use simple `derive(Validate)`.
-    entity.validate().map_err(ConfigError::ValidationError)?;
+    entity.validate().map_err(ConfigError::ValidationErrors)?;
 
     Ok(entity)
 }
