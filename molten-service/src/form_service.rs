@@ -3,7 +3,6 @@ use molten_core::form::{FormBuilder, FormDefinition};
 use molten_storage_seaorm::repo::FormRepository;
 use sea_orm::DatabaseConnection;
 
-
 pub struct FormService {
     db: DatabaseConnection,
 }
@@ -32,6 +31,6 @@ impl FormService {
             .await
             .map_err(ServiceError::Internal)?
             .ok_or_else(|| ServiceError::Internal(anyhow::anyhow!("Form not found")))
-            // TODO: Implement specific NotFound error code
+        // TODO: Implement specific NotFound error code
     }
 }
