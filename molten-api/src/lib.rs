@@ -27,5 +27,6 @@ pub fn create_app(db: DatabaseConnection) -> Router {
         .route("/documents", post(handlers::create_document))
         .route("/documents/{id}", get(handlers::get_document))
         .route("/forms", post(handlers::create_form))
+        .route("/forms/{id}", get(handlers::get_form))
         .with_state(state)
 }

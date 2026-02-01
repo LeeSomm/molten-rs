@@ -1,5 +1,5 @@
 use crate::error::ServiceError;
-use molten_core::form::{FormBuilder, FormDefinition};
+use molten_core::FormDefinition;
 use molten_storage_seaorm::repo::FormRepository;
 use sea_orm::DatabaseConnection;
 
@@ -13,11 +13,8 @@ impl FormService {
         Self { db }
     }
 
-    /// Creates a new form, validates it, and saves it to storage
-    ///
-    /// # Steps
-    /// 1.
-    pub async fn create_form(&self, form: FormDefinition) -> Result<FormDefinition, ServiceError> {
+    /// Saves the form to the database using SeaORM
+    pub async fn save_form(&self, form: FormDefinition) -> Result<FormDefinition, ServiceError> {
         FormRepository::save(&self.db, &form)
             .await
             .map_err(|e| ServiceError::Internal(e))?;

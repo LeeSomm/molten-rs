@@ -9,7 +9,9 @@ use serde_json::json;
 
 /// A wrapper to allow us to implement IntoResponse for foreign errors
 pub enum ApiError {
+    /// Errors generated from calling molten-service functions
     Service(ServiceError),
+    /// Errors generated from calling molten-config functions
     Config(ConfigError),
 }
 
@@ -48,6 +50,9 @@ impl IntoResponse for ApiError {
                     .into_response();
             }
             ApiError::Service(ServiceError::FormValidationErrors(e)) => {
+                (StatusCode::BAD_REQUEST, e.to_string())
+            }
+            ApiError::Service(ServiceError::WorkflowValidationErrors(e)) => {
                 (StatusCode::BAD_REQUEST, e.to_string())
             }
             ApiError::Config(ConfigError::ValidationErrors(e)) => {

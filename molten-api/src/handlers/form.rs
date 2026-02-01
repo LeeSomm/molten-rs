@@ -3,14 +3,26 @@ use axum::{
     Json,
     extract::{Path, State},
 };
-use molten_config::{ConfigFormat, parse_content};
-use molten_core::{FormBuilder, FormDefinition, document::Document};
+use molten_core::{FormBuilder, FormDefinition};
 use molten_service::ServiceError;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
-use std::collections::HashMap;
 
-// POST /forms
+/// Create a new form definition.
+///
+/// Accepts a [`FormBuilder`] and validates it into a finalized
+/// [`FormDefinition`]. If validation succeeds, the form is
+/// persisted and the stored definition is returned.
+///
+/// # Route
+/// `POST /forms`
+///
+/// # Errors
+/// - Returns an error if the form definition fails validation.
+/// - Returns an error if persistence fails.
+///
+/// # Notes
+/// This endpoint is intended only for creating new forms.
+/// Updates to existing forms should be handled via a separate endpoint
+/// to allow different validation and lifecycle rules.
 pub async fn create_form(
     State(state): State<AppState>,
     Json(builder): Json<FormBuilder>,
@@ -19,7 +31,25 @@ pub async fn create_form(
         .build()
         .map_err(|e| ServiceError::FormValidationErrors(e))?;
 
-    let form = state.form_service.create_form(form_def).await?;
+    let form = state.form_service.save_form(form_def).await?;
 
     Ok(Json(form))
 }
+
+/// Retrieve a form definition by id.
+///
+/// # Route
+/// `GET /forms/{id}`
+///
+/// # Errors
+/// - Returns an error if the form does not exist.
+/// - Returns an error if the underlying storage operation fails.
+pub async fn get_form(
+    State(state): State<AppState>,
+    Path(id): Path<String>,
+) -> Result<Json<FormDefinition>, ApiError> {
+    let form = state.form_service.get_form(&id).await?;
+    Ok(Json(form))
+}
+
+// TODO: POST /forms/{id} for Updates

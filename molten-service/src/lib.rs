@@ -8,9 +8,10 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
-pub mod document_service;
 pub mod error;
-pub mod form_service;
+pub mod services;
 
-pub use document_service::DocumentService;
 pub use error::ServiceError;
+pub use services::DocumentService;
+pub use services::FormService;
+pub use services::WorkflowService;

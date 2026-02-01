@@ -19,6 +19,9 @@ pub enum ServiceError {
     #[error("Form validation failed: {0:?}")]
     FormValidationErrors(validator::ValidationErrors),
 
+    #[error("Workflow validation failed: {0:?}")]
+    WorkflowValidationErrors(validator::ValidationErrors),
+
     #[error("Workflow violation: {0}")]
     WorkflowRuleViolation(#[from] WorkflowError),
 

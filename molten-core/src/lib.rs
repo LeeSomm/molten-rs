@@ -17,4 +17,4 @@ pub mod workflow;
 pub use document::Document;
 pub use field::{FieldBuilder, FieldDefinition, FieldType};
 pub use form::{FormBuilder, FormDefinition};
-pub use workflow::{Phase, Transition, WorkflowDefinition};
+pub use workflow::{Phase, Transition, WorkflowBuilder, WorkflowDefinition};
