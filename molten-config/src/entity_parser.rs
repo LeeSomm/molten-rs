@@ -4,6 +4,8 @@ use std::fs;
 use std::path::Path;
 use validator::Validate;
 
+/// Parser for entities defined in molten-core
+
 /// Supported configuration formats.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ConfigFormat {

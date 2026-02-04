@@ -8,25 +8,10 @@
 #![warn(missing_docs)]
 pub mod error;
 pub mod handlers;
+pub mod startup;
 pub mod state;
+pub mod telemetry;
 
-use axum::{
-    Router,
-    routing::{get, post},
-};
-use sea_orm::DatabaseConnection;
-use state::AppState;
 
-/// Creates the Axum router with all routes and state attached.
-/// This function is now testable without starting a real TCP listener.
-pub fn create_app(db: DatabaseConnection) -> Router {
-    let state = AppState::new(db);
 
-    Router::new()
-        .route("/health", get(|| async { "OK" }))
-        .route("/documents", post(handlers::create_document))
-        .route("/documents/{id}", get(handlers::get_document))
-        .route("/forms", post(handlers::create_form))
-        .route("/forms/{id}", get(handlers::get_form))
-        .with_state(state)
-}
+

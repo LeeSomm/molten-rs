@@ -1,4 +1,5 @@
-use molten_api::create_app;
+use molten_api::startup::create_app;
+use molten_api::telemetry::{get_subscriber, init_subscriber};
 use molten_migration::{Migrator, MigratorTrait};
 use sea_orm::Database;
 use std::net::SocketAddr;
@@ -6,14 +7,14 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    // 1. Initialize Logging
+    // 1. Initialize Environment Variables & Logging
     dotenvy::dotenv().ok();
-    tracing_subscriber::registry()
-        .with(tracing_subscriber::EnvFilter::new(
-            std::env::var("RUST_LOG").unwrap_or_else(|_| "debug".into()),
-        ))
-        .with(tracing_subscriber::fmt::layer())
-        .init();
+    let subscriber = get_subscriber(
+        "molten-api".into(), 
+        "molten-api=info,tower-http=info".into(), 
+        std::io::stdout,
+    );
+    init_subscriber(subscriber);
 
     // 2. Connect to Database
     let db_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");

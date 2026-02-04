@@ -2,6 +2,9 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ConfigError {
+    #[error("Configuration build failed: {0}")]
+    ConfigBuildError(#[from] config::ConfigError),
+
     #[error("Failed to read file '{0}': {1}")]
     FileReadError(String, std::io::Error),
 
