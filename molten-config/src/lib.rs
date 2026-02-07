@@ -8,16 +8,16 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
-pub mod error;
 pub mod entity_parser;
+pub mod error;
 pub mod settings_parser;
 
 use molten_core::form::FormDefinition;
 use molten_core::workflow::WorkflowDefinition;
 use std::path::Path;
 
-pub use error::ConfigError;
 pub use entity_parser::{ConfigFormat, load_from_file, parse_content};
+pub use error::ConfigError;
 
 // -----------------------------------------------------------------------------
 // Convenience Helpers

@@ -10,8 +10,8 @@ async fn main() -> anyhow::Result<()> {
     // 1. Initialize Environment Variables & Logging
     dotenvy::dotenv().ok();
     let subscriber = get_subscriber(
-        "molten-api".into(), 
-        "molten-api=info,tower-http=info".into(), 
+        "molten-api".into(),
+        "molten-api=info,tower-http=info".into(),
         std::io::stdout,
     );
     init_subscriber(subscriber);

@@ -1,10 +1,8 @@
+use crate::ConfigError;
+use sea_orm::ConnectOptions;
 /// Runtime configuration parser
-
 use secrecy::{ExposeSecret, SecretString};
 use serde_aux::field_attributes::deserialize_number_from_string;
-use sea_orm::ConnectOptions;
-use crate::ConfigError;
-
 
 /// Structure for all config settings
 #[derive(serde::Deserialize, Clone)]
@@ -28,7 +26,7 @@ pub struct AppSettings {
 #[derive(serde::Deserialize, Clone)]
 pub struct DatabaseSettings {
     /// Database management system (current options: Postgres, MySQL)
-    pub dbms: String, 
+    pub dbms: String,
     /// Database username
     pub user: String,
     /// Database password
@@ -39,7 +37,7 @@ pub struct DatabaseSettings {
     /// Database host address
     pub host: String,
     /// Database name
-    pub database_name: String
+    pub database_name: String,
 }
 
 impl DatabaseSettings {
@@ -61,18 +59,18 @@ impl DatabaseSettings {
 pub fn get_configuration() -> Result<Settings, ConfigError> {
     // Set base path
     let base_path = std::env::current_dir().expect("Failed to determine the current directory");
-    let config_dir = std::env::var("MOLTEN_CONFIG_DIR")
-        .unwrap_or_else(|_| "config".to_string());
+    let config_dir = std::env::var("MOLTEN_CONFIG_DIR").unwrap_or_else(|_| "config".to_string());
     let config_dir = base_path.join(config_dir);
 
     let settings = config::Config::builder()
         // Read app.{yaml|toml|json} file in config directory
         .add_source(config::File::from(config_dir.join("app")).required(true))
-        // Add settings from environment variables with prefix MOLTEN and '__' separator 
-        // e.g., MOLTEN_APPLICATION__PORT=1234 would overwrite `Settings.application.port` 
-        .add_source(config::Environment::with_prefix("molten")
-            .prefix_separator("_")
-            .separator("__")
+        // Add settings from environment variables with prefix MOLTEN and '__' separator
+        // e.g., MOLTEN_APPLICATION__PORT=1234 would overwrite `Settings.application.port`
+        .add_source(
+            config::Environment::with_prefix("molten")
+                .prefix_separator("_")
+                .separator("__"),
         )
         .build()?
         // Try to convert config values into Settings type
@@ -84,8 +82,8 @@ pub fn get_configuration() -> Result<Settings, ConfigError> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tempfile::TempDir;
     use std::fs;
+    use tempfile::TempDir;
 
     fn setup_config_dir() -> TempDir {
         let tmp = TempDir::new().unwrap();
@@ -113,7 +111,6 @@ database:
         tmp
     }
 
-
     #[test]
     fn loads_settings_from_custom_config_dir() {
         // Arrange
@@ -126,7 +123,6 @@ database:
             // Assert
             assert_eq!(settings.application.port, 8000);
         });
-
     }
 
     #[test]
@@ -136,15 +132,19 @@ database:
 
         temp_env::with_vars(
             [
-                ("MOLTEN_CONFIG_DIR", Some(config_dir.path().to_str().unwrap())),
-                ("MOLTEN_APPLICATION__PORT", Some("1234"))
-            ], 
+                (
+                    "MOLTEN_CONFIG_DIR",
+                    Some(config_dir.path().to_str().unwrap()),
+                ),
+                ("MOLTEN_APPLICATION__PORT", Some("1234")),
+            ],
             || {
-                            // Act
-            let settings = get_configuration().unwrap();
+                // Act
+                let settings = get_configuration().unwrap();
 
-            // Assert
-            assert_eq!(settings.application.port, 1234);
-            })
+                // Assert
+                assert_eq!(settings.application.port, 1234);
+            },
+        )
     }
 }
