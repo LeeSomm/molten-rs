@@ -1,3 +1,9 @@
+//! This module defines the core structures for managing the definition and
+//! behavior of individual fields within a form.
+//!
+//! It includes `FieldType` to enumerate the various data types a field can hold,
+//! `FieldDefinition` to describe the metadata and validation rules for a field,
+//! and `FieldBuilder` for constructing `FieldDefinition` instances programmatically.
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 

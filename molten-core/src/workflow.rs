@@ -1,3 +1,10 @@
+//! This module defines the core structures for managing workflow definitions,
+//! which dictate the lifecycle and state transitions of documents within the
+//! Molten system.
+//!
+//! It includes `Phase` and `Transition` to model the states and movements
+//! within a workflow, `WorkflowDefinition` to represent a complete state machine,
+//! and `WorkflowBuilder` for programmatic construction and validation of workflows.
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use std::convert::TryFrom;
@@ -36,6 +43,12 @@ pub struct Phase {
 }
 
 impl Phase {
+    /// Creates a new `Phase` instance.
+    ///
+    /// # Arguments
+    /// * `id` - The unique identifier for the phase.
+    /// * `label` - The human-readable name for the phase.
+    /// * `phase_type` - The type of the phase (e.g., Start, Normal, End).
     pub fn new(id: &str, label: &str, phase_type: PhaseType) -> Self {
         Self {
             id: id.to_string(),
@@ -70,6 +83,12 @@ pub struct Transition {
 }
 
 impl Transition {
+    /// Creates a new `Transition` instance.
+    ///
+    /// # Arguments
+    /// * `name` - The name of the action represented by this transition.
+    /// * `from` - The ID of the source phase.
+    /// * `to` - The ID of the target phase.
     pub fn new(name: &str, from: &str, to: &str) -> Self {
         Self {
             name: name.to_string(),
@@ -87,17 +106,19 @@ impl Transition {
 #[derive(Debug, Clone, Serialize, Deserialize, Validate)]
 #[serde(try_from = "WorkflowBuilder")]
 pub struct WorkflowDefinition {
+    /// The unique identifier for this workflow.
     #[validate(length(min = 1, max = 64))]
     id: String,
 
+    /// Human-readable name for the workflow.
     #[validate(length(min = 1, max = 100))]
     name: String,
 
-    /// All available states.
+    /// All available phases (states) within this workflow.
     #[validate(nested)]
     phases: Vec<Phase>,
 
-    /// All allowed movements between states.
+    /// All allowed transitions (movements) between phases.
     #[validate(nested)]
     transitions: Vec<Transition>,
 }
@@ -133,15 +154,19 @@ impl WorkflowGraph for WorkflowDefinition {
 }
 
 impl WorkflowDefinition {
+    /// Returns the ID of the workflow.
     pub fn id(&self) -> &str {
         &self.id
     }
+    /// Returns the human-readable name of the workflow.
     pub fn name(&self) -> &str {
         &self.name
     }
+    /// Returns a slice of all phases in the workflow.
     pub fn phases(&self) -> &[Phase] {
         &self.phases
     }
+    /// Returns a slice of all transitions in the workflow.
     pub fn transitions(&self) -> &[Transition] {
         &self.transitions
     }
@@ -152,7 +177,17 @@ impl WorkflowDefinition {
 // -----------------------------------------------------------------------------
 
 // TODO: Implement additional validations for transitions, such as rules for phase types
-/// Ensures that every transition points to a Phase that actually exists.
+/// Ensures that all transitions in a `WorkflowDefinition` refer to valid, existing phases.
+///
+/// This validation prevents transitions from or to non-existent phases, ensuring the
+/// integrity and consistency of the workflow graph.
+///
+/// # Arguments
+/// * `definition` - A reference to the `WorkflowDefinition` to validate.
+///
+/// # Returns
+/// A `Result` which is `Ok` if all transitions are valid, or `Err` with
+/// `validator::ValidationErrors` if any invalid transitions are found.
 fn validate_workflow_integrity(
     definition: &WorkflowDefinition,
 ) -> Result<(), validator::ValidationErrors> {
@@ -185,17 +220,24 @@ fn validate_workflow_integrity(
 // Builder & Deserialization
 // -----------------------------------------------------------------------------
 
+/// Builder for constructing validated [`WorkflowDefinition`] instances.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorkflowBuilder {
+    /// The unique identifier for the workflow.
     pub id: String,
+    /// Human-readable name for the workflow.
     pub name: String,
     #[serde(default)]
+    /// The phases that make up this workflow.
     pub phases: Vec<Phase>,
     #[serde(default)]
+    /// The transitions between phases in this workflow.
     pub transitions: Vec<Transition>,
 }
 
 impl WorkflowBuilder {
+    /// Creates a new `WorkflowBuilder` instance with the given ID and name,
+    /// defaulting phases and transitions to empty lists.
     pub fn new(id: &str, name: &str) -> Self {
         Self {
             id: id.to_string(),
@@ -205,16 +247,23 @@ impl WorkflowBuilder {
         }
     }
 
+    /// Adds a `Phase` to the workflow.
     pub fn add_phase(mut self, phase: Phase) -> Self {
         self.phases.push(phase);
         self
     }
 
+    /// Adds a `Transition` to the workflow.
     pub fn add_transition(mut self, transition: Transition) -> Self {
         self.transitions.push(transition);
         self
     }
 
+    /// Builds a validated `WorkflowDefinition` from the `WorkflowBuilder` instance.
+    ///
+    /// # Returns
+    /// A `Result` containing the `WorkflowDefinition` if valid, or a
+    /// `validator::ValidationErrors` if validation fails.
     pub fn build(self) -> Result<WorkflowDefinition, validator::ValidationErrors> {
         WorkflowDefinition::try_from(self)
     }

@@ -1,3 +1,10 @@
+//! This module defines the core structures for managing `FormDefinition`s,
+//! which serve as blueprints for documents within the Molten system.
+//!
+//! It includes `FormDefinition` to describe the overall structure of a form,
+//! containing a collection of `FieldDefinition`s and associated validation rules.
+//! The `FormBuilder` is provided for programmatic construction and validation
+//! of form definitions.
 use crate::field::FieldDefinition;
 use once_cell::sync::Lazy;
 use regex::Regex;
@@ -51,16 +58,19 @@ fn validate_unique_field_ids(fields: &[FieldDefinition]) -> Result<(), Validatio
 }
 
 impl FormDefinition {
-    // Getters
+    /// ID getter
     pub fn id(&self) -> &str {
         &self.id
     }
+    /// Name getter
     pub fn name(&self) -> &str {
         &self.name
     }
+    /// Version getter
     pub fn version(&self) -> u32 {
         self.version
     }
+    /// Fields getter
     pub fn fields(&self) -> &[FieldDefinition] {
         &self.fields
     }
@@ -69,19 +79,26 @@ impl FormDefinition {
 /// Builder for constructing validated [`FormDefinition`] instances.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FormBuilder {
+    /// The unique identifier for this form.
     pub id: String,
+    /// Human-readable name for the form.
     pub name: String,
     #[serde(default = "default_version")]
+    /// The version number for the form. Defaults to 1.
     pub version: u32,
     #[serde(default)]
+    /// The list of field definitions that make up this form.
     pub fields: Vec<FieldDefinition>,
 }
 
+/// Provides the default version number for a form, which is `1`.
 fn default_version() -> u32 {
     1
 }
 
 impl FormBuilder {
+    /// Creates a new `FormBuilder` instance with the given ID and name,
+    /// defaulting the version to 1 and fields to an empty list.
     pub fn new(id: &str, name: &str) -> Self {
         Self {
             id: id.to_string(),
@@ -91,21 +108,29 @@ impl FormBuilder {
         }
     }
 
+    /// Sets the version for the form.
     pub fn version(mut self, version: u32) -> Self {
         self.version = version;
         self
     }
 
+    /// Adds a `FieldDefinition` to the form.
     pub fn add_field(mut self, field: FieldDefinition) -> Self {
         self.fields.push(field);
         self
     }
 
+    /// Replaces the current list of fields with a new vector of `FieldDefinition`s.
     pub fn with_fields(mut self, fields: Vec<FieldDefinition>) -> Self {
         self.fields = fields;
         self
     }
 
+    /// Builds a validated `FormDefinition` from the `FormBuilder` instance.
+    ///
+    /// # Returns
+    /// A `Result` containing the `FormDefinition` if valid, or a
+    /// `validator::ValidationErrors` if validation fails.
     pub fn build(self) -> Result<FormDefinition, validator::ValidationErrors> {
         FormDefinition::try_from(self)
     }

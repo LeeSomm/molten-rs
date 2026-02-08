@@ -1,3 +1,10 @@
+//! This module defines the `Document` struct, which represents a concrete
+//! instance of a form.
+//!
+//! A `Document` holds the actual data values for fields defined in a
+//! `FormDefinition` and tracks its current phase within an associated
+//! `WorkflowDefinition`. It serves as the primary data entity managed
+//! by the Molten system.
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
