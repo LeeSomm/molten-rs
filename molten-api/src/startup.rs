@@ -90,10 +90,10 @@ impl Application {
     }
 
     /// Creates the Axum router with all routes and state attached.
-    /// 
+    ///
     /// # Arguments
     /// * `db` - The database connection
-    /// 
+    ///
     /// # Returns
     /// An axum Router
     fn define_router(db: DatabaseConnection) -> Router {

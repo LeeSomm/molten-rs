@@ -17,12 +17,12 @@ impl FormService {
     pub async fn save_form(&self, form: FormDefinition) -> Result<FormDefinition, ServiceError> {
         FormRepository::save(&self.db, &form)
             .await
-            .map_err(|e| ServiceError::Internal(e))?;
+            .map_err(ServiceError::Internal)?;
 
         Ok(form)
     }
 
-    ///
+    /// Retrieves form by ID.
     pub async fn get_form(&self, id: &str) -> Result<FormDefinition, ServiceError> {
         FormRepository::find_by_id(&self.db, id)
             .await

@@ -2,9 +2,7 @@ use crate::entities::document;
 use crate::entities::document::Entity as DocumentEntity;
 use anyhow::Result;
 use molten_core::document::Document;
-use sea_orm::{
-    ActiveModelTrait, ActiveValue, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set,
-};
+use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set};
 use serde_json::Value;
 use std::collections::HashMap; // Using anyhow for simplified error handling in storage layer
 
@@ -21,8 +19,8 @@ impl DocumentRepository {
             current_phase: Set(doc.current_phase.clone()),
             // Serialize the HashMap into a JSON Value
             data: Set(serde_json::to_value(&doc.data)?),
-            created_at: Set(doc.created_at.into()),
-            updated_at: Set(doc.updated_at.into()),
+            created_at: Set(doc.created_at),
+            updated_at: Set(doc.updated_at),
         };
 
         active_model.insert(db).await?;
@@ -44,8 +42,8 @@ impl DocumentRepository {
                     workflow_id: m.workflow_id,
                     current_phase: m.current_phase,
                     data: data_map,
-                    created_at: m.created_at.into(), // Assumes SeaORM DateTimeUtc -> Chrono conversion
-                    updated_at: m.updated_at.into(),
+                    created_at: m.created_at,
+                    updated_at: m.updated_at,
                 }))
             }
             None => Ok(None),
@@ -58,7 +56,7 @@ impl DocumentRepository {
             id: Set(doc.id.clone()), // Primary key determines which row to update
             current_phase: Set(doc.current_phase.clone()),
             data: Set(serde_json::to_value(&doc.data)?),
-            updated_at: Set(chrono::Utc::now().into()),
+            updated_at: Set(chrono::Utc::now()),
             ..Default::default() // Don't touch other fields (form_id, created_at)
         };
 
@@ -84,8 +82,8 @@ impl DocumentRepository {
                 workflow_id: m.workflow_id,
                 current_phase: m.current_phase,
                 data: data_map,
-                created_at: m.created_at.into(),
-                updated_at: m.updated_at.into(),
+                created_at: m.created_at,
+                updated_at: m.updated_at,
             });
         }
 

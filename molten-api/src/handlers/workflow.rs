@@ -33,7 +33,7 @@ pub async fn create_workflow(
 ) -> Result<Json<WorkflowDefinition>, ApiError> {
     let workflow_def: WorkflowDefinition = builder
         .build()
-        .map_err(|e| ServiceError::WorkflowValidationErrors(e))?;
+        .map_err(ServiceError::WorkflowValidationErrors)?;
 
     let workflow = state.workflow_service.save_workflow(workflow_def).await?;
 

@@ -33,7 +33,7 @@ pub async fn create_form(
 ) -> Result<Json<FormDefinition>, ApiError> {
     let form_def: FormDefinition = builder
         .build()
-        .map_err(|e| ServiceError::FormValidationErrors(e))?;
+        .map_err(ServiceError::FormValidationErrors)?;
 
     let form = state.form_service.save_form(form_def).await?;
 

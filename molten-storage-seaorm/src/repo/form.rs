@@ -2,7 +2,7 @@ use crate::entities::form;
 use crate::entities::form::Entity as FormEntity;
 use anyhow::Result;
 use molten_core::form::FormDefinition;
-use sea_orm::{ActiveModelTrait, DatabaseConnection, EntityTrait, Set};
+use sea_orm::{DatabaseConnection, EntityTrait, Set};
 
 pub struct FormRepository;
 
@@ -15,8 +15,8 @@ impl FormRepository {
             name: Set(def.name().to_string()),
             version: Set(def.version() as i32),
             schema: Set(serde_json::to_value(def)?),
-            created_at: Set(chrono::Utc::now().into()),
-            updated_at: Set(chrono::Utc::now().into()),
+            created_at: Set(chrono::Utc::now()),
+            updated_at: Set(chrono::Utc::now()),
         };
 
         // TODO: Separate 'insert' vs 'update' logic here.

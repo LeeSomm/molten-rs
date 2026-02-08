@@ -35,7 +35,7 @@ impl AppState {
         let form_service = FormService::new(db.clone());
         let workflow_service = WorkflowService::new(db.clone());
         Self {
-            db: db,
+            db,
             document_service: Arc::new(document_service),
             form_service: Arc::new(form_service),
             workflow_service: Arc::new(workflow_service),

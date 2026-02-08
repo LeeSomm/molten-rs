@@ -26,7 +26,7 @@ pub use molten_document::*;
 pub use molten_service::*;
 pub use molten_workflow::*;
 
-// // Re-export entire modules for advanced users
+// Re-export entire modules for advanced users
 pub mod config {
     pub use molten_config::*;
 }

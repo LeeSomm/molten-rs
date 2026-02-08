@@ -39,11 +39,11 @@ pub fn validate_document(
         }
 
         // If value exists, validate its content
-        if let Some(val) = value {
-            if !val.is_null() {
-                if let Err(e) = validate_value(val, field_def) {
-                    errors.push(e);
-                }
+        if let Some(val) = value
+            && !val.is_null()
+        {
+            if let Err(e) = validate_value(val, field_def) {
+                errors.push(e);
             }
         }
     }
@@ -77,23 +77,23 @@ fn validate_value(value: &Value, field: &FieldDefinition) -> Result<(), Document
                     got_type: get_json_type(value),
                 })?;
 
-            if let Some(min_val) = min {
-                if num < *min_val {
-                    return Err(DocumentValidationError::ValueTooLow {
-                        field_id: field.id().to_string(),
-                        value: num,
-                        min: *min_val,
-                    });
-                }
+            if let Some(min_val) = min
+                && num < *min_val
+            {
+                return Err(DocumentValidationError::ValueTooLow {
+                    field_id: field.id().to_string(),
+                    value: num,
+                    min: *min_val,
+                });
             }
-            if let Some(max_val) = max {
-                if num > *max_val {
-                    return Err(DocumentValidationError::ValueTooHigh {
-                        field_id: field.id().to_string(),
-                        value: num,
-                        max: *max_val,
-                    });
-                }
+            if let Some(max_val) = max
+                && num > *max_val
+            {
+                return Err(DocumentValidationError::ValueTooHigh {
+                    field_id: field.id().to_string(),
+                    value: num,
+                    max: *max_val,
+                });
             }
         }
         FieldType::Boolean => {

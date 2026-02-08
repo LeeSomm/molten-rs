@@ -68,7 +68,7 @@ impl DocumentService {
         // 5. Persist
         DocumentRepository::create(&self.db, &doc)
             .await
-            .map_err(|e| ServiceError::Internal(e))?;
+            .map_err(ServiceError::Internal)?;
 
         Ok(doc)
     }

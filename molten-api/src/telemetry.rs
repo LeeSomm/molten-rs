@@ -24,10 +24,7 @@ use tracing_subscriber::{EnvFilter, Registry, layer::SubscriberExt};
 ///
 /// # Returns
 /// An `impl Subscriber + Send + Sync` configured with the specified filter and sink.
-pub fn get_subscriber<Sink>(
-    env_filter: String,
-    sink: Sink,
-) -> impl Subscriber + Send + Sync
+pub fn get_subscriber<Sink>(env_filter: String, sink: Sink) -> impl Subscriber + Send + Sync
 where
     // Function is generic for MakeWriter trait allowing us to choose
     // where messages are written to (e.g., std::io::{stdout, sink} )
@@ -37,8 +34,7 @@ where
         // If no RUST_LOG env variable is set, set the Env Filter manually
         .or_else(|_| EnvFilter::try_new(env_filter))
         .expect("Unable to set logging level.");
-    let formatting_layer = tracing_subscriber::fmt::layer()
-        .with_writer(sink);
+    let formatting_layer = tracing_subscriber::fmt::layer().with_writer(sink);
 
     Registry::default().with(env_filter).with(formatting_layer)
 }

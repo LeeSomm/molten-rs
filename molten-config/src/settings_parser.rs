@@ -1,3 +1,9 @@
+//! This module is responsible for parsing application and database settings
+//! from configuration files and environment variables.
+//!
+//! It defines the structure of `Settings` and provides the `get_configuration`
+//! function to load these settings, allowing for flexible and environment-aware
+//! application configuration.
 use crate::ConfigError;
 use sea_orm::ConnectOptions;
 /// Runtime configuration parser
@@ -13,6 +19,7 @@ pub struct Settings {
     pub database: DatabaseSettings,
 }
 
+/// Application configuration settings
 #[derive(serde::Deserialize, Clone)]
 pub struct AppSettings {
     /// API host
@@ -55,7 +62,15 @@ impl DatabaseSettings {
     }
 }
 
-/// Builds config from config files and env variables
+/// Loads and parses application settings from `app.yaml` and environment variables.
+///
+/// This function constructs the application's configuration by:
+/// 1. Reading the `app.yaml` file located in the `config` directory (or specified by `MOLTEN_CONFIG_DIR`).
+/// 2. Overriding settings with environment variables prefixed with `MOLTEN_` (e.g., `MOLTEN_APPLICATION__PORT`).
+///
+/// # Returns
+/// A `Result` which is `Ok` with the `Settings` instance if successful,
+/// or `Err` with a `ConfigError` if configuration loading or deserialization fails.
 pub fn get_configuration() -> Result<Settings, ConfigError> {
     // Set base path
     let base_path = std::env::current_dir().expect("Failed to determine the current directory");

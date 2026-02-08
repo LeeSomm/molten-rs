@@ -1,16 +1,25 @@
+//! Parser for entities defined in molten-core
+//! This module provides utilities for loading, parsing, and validating
+//! configuration entities (such as `FormDefinition` and `WorkflowDefinition`)
+//! from different file formats (YAML, JSON, TOML).
+//!
+//! It offers generic functions to deserialize configuration content and apply
+//! validation rules, ensuring that configuration data conforms to expected
+//! structures and constraints.
 use crate::error::ConfigError;
 use serde::de::DeserializeOwned;
 use std::fs;
 use std::path::Path;
 use validator::Validate;
 
-/// Parser for entities defined in molten-core
-
 /// Supported configuration formats.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ConfigFormat {
+    /// Represents Yaml format
     Yaml,
+    /// Represents Json format
     Json,
+    /// Represents Toml format
     Toml,
 }
 
@@ -72,7 +81,6 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use molten_core::field::{FieldDefinition, FieldType};
     use molten_core::form::FormDefinition; // Just to ensure types exist
 
     // A sample valid YAML form

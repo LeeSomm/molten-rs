@@ -12,10 +12,7 @@ use molten_config::settings_parser::get_configuration;
 async fn main() -> anyhow::Result<()> {
     // 1. Initialize Environment Variables & Logging
     dotenvy::dotenv().ok();
-    let subscriber = get_subscriber(
-        "molten-api=info,tower-http=info".into(),
-        std::io::stdout,
-    );
+    let subscriber = get_subscriber("molten-api=info,tower-http=info".into(), std::io::stdout);
     init_subscriber(subscriber);
     let _guard = tracing::info_span!("app", service = "molten-api").entered();
 

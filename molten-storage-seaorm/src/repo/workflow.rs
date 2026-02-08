@@ -2,7 +2,7 @@ use crate::entities::workflow;
 use crate::entities::workflow::Entity as WorkflowEntity;
 use anyhow::Result;
 use molten_core::workflow::WorkflowDefinition;
-use sea_orm::{ActiveModelTrait, DatabaseConnection, EntityTrait, Set};
+use sea_orm::{DatabaseConnection, EntityTrait, Set};
 
 pub struct WorkflowRepository;
 
@@ -12,8 +12,8 @@ impl WorkflowRepository {
             id: Set(def.id().to_string()),
             name: Set(def.name().to_string()),
             graph: Set(serde_json::to_value(def)?),
-            created_at: Set(chrono::Utc::now().into()),
-            updated_at: Set(chrono::Utc::now().into()),
+            created_at: Set(chrono::Utc::now()),
+            updated_at: Set(chrono::Utc::now()),
         };
 
         workflow::Entity::insert(active_model)

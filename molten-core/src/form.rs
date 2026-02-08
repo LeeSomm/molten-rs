@@ -6,9 +6,7 @@ use std::collections::HashSet;
 use validator::{Validate, ValidationError};
 
 // Only alphanumeric, hyphens, and underscores
-static ID_REGEX: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r"^[a-zA-Z0-9_-]+$").unwrap()
-});
+static ID_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"^[a-zA-Z0-9_-]+$").unwrap());
 
 /// Defines the structure of a Form (the "Table Schema").
 ///
