@@ -1,3 +1,7 @@
+//! This module provides the API handlers for Form entity operations.
+//!
+//! It includes functions for creating new forms and retrieving existing ones,
+//! serving as the entry point for interactions with the form service layer.
 use crate::{error::ApiError, state::AppState};
 use axum::{
     Json,

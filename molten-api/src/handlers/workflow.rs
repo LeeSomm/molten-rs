@@ -1,3 +1,7 @@
+//! This module provides the API handlers for Workflow entity operations.
+//!
+//! It includes functions for creating new workflows and retrieving existing ones,
+//! serving as the entry point for interactions with the workflow service layer.
 use crate::{error::ApiError, state::AppState};
 use axum::{
     Json,

@@ -1,3 +1,9 @@
+//! Contains error types and their HTTP response conversions for the Molten API.
+//!
+//! This module defines `ApiError` for handling various application-specific errors
+//! originating from service and configuration layers, converting them into
+//! appropriate HTTP status codes and JSON responses. It also includes `BuildError`
+//! for errors encountered during application startup.
 use axum::{
     Json,
     http::StatusCode,
@@ -75,11 +81,16 @@ impl IntoResponse for ApiError {
     }
 }
 
+/// Represents errors that can occur during the API server's startup phase.
+/// These errors typically relate to database connection issues or I/O operations
+/// essential for initializing the application.
 #[derive(Debug, Error)]
 pub enum BuildError {
+    /// Errors generated during startup from database operations
     #[error("database error during startup")]
     Database(#[from] sea_orm::DbErr),
 
+    /// Errors generated during startup from running the application
     #[error("I/O error during startup")]
     Io(#[from] std::io::Error),
 }
