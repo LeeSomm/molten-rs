@@ -9,8 +9,10 @@ documentation = "https://docs.rs/molten-config"
 homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
+# Internal Crates
+molten-core = { version = "0.0.1", path = "../molten-core" }
+
 config = "0.15.19"
-molten-core = { path = "../molten-core" }
 sea-orm = "1.1.19"
 secrecy = { version = "0.10.3", features = ["serde"] }
 serde = "1.0.228"

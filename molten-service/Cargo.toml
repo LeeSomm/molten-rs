@@ -10,11 +10,12 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 
 [dependencies]
-molten-core = { path = "../molten-core" }
-molten-config = { path = "../molten-config" }
-molten-document = { path = "../molten-document" }
-molten-workflow = { path = "../molten-workflow" }
-molten-storage-seaorm = { path = "../molten-storage-seaorm" }
+# Internal Crates
+molten-core = { version = "0.0.1", path = "../molten-core" }
+molten-config = { version = "0.0.1", path = "../molten-config" }
+molten-document = { version = "0.0.1", path = "../molten-document" }
+molten-workflow = { version = "0.0.1", path = "../molten-workflow" }
+molten-storage-seaorm = { version = "0.0.1", path = "../molten-storage-seaorm" }
 
 anyhow = "1.0.100"
 chrono = "0.4.43"

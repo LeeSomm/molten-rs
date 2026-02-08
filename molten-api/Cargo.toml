@@ -10,11 +10,11 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
 # Internal Crates
-molten-core = { path = "../molten-core" }
-molten-service = { path = "../molten-service" }
-molten-storage-seaorm = { path = "../molten-storage-seaorm" }
-molten-config = { path = "../molten-config" }
-molten-migration = { path = "../molten-migration" }
+molten-core = { version = "0.0.1", path = "../molten-core" }
+molten-service = { version = "0.0.1", path = "../molten-service" }
+molten-storage-seaorm = { version = "0.0.1", path = "../molten-storage-seaorm" }
+molten-config = { version = "0.0.1", path = "../molten-config" }
+molten-migration = { version = "0.0.1", path = "../molten-migration" }
 
 # Web Framework
 axum = { version = "0.8.8", features = ["macros"] }

@@ -1585,12 +1585,12 @@ dependencies = [
 name = "molten"
 version = "0.0.1"
 dependencies = [
- "molten-config 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "molten-core 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "molten-document 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "molten-service 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "molten-storage-seaorm 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "molten-workflow 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "molten-config",
+ "molten-core",
+ "molten-document",
+ "molten-service",
+ "molten-storage-seaorm",
+ "molten-workflow",
 ]
 
 [[package]]
@@ -1600,11 +1600,11 @@ dependencies = [
  "anyhow",
  "axum",
  "dotenvy",
- "molten-config 0.0.1",
- "molten-core 0.0.1",
+ "molten-config",
+ "molten-core",
  "molten-migration",
- "molten-service 0.0.1",
- "molten-storage-seaorm 0.0.1",
+ "molten-service",
+ "molten-storage-seaorm",
  "sea-orm",
  "serde",
  "serde_json",
@@ -1621,7 +1621,7 @@ name = "molten-config"
 version = "0.0.1"
 dependencies = [
  "config",
- "molten-core 0.0.1",
+ "molten-core",
  "sea-orm",
  "secrecy",
  "serde",
@@ -1636,16 +1636,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "molten-config"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0415c79be8c71c712e3840acca8f80e794e6e3313a8bd78723ab29f280589c34"
-
-[[package]]
 name = "molten-core"
 version = "0.0.1"
 dependencies = [
  "chrono",
+ "once_cell",
+ "regex",
  "serde",
  "serde_json",
  "thiserror",
@@ -1653,27 +1649,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "molten-core"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad915b18ada2a16bc5d089ab46ce52be15a0139c81dbb80da258defd11650b1b"
-
-[[package]]
 name = "molten-document"
 version = "0.0.1"
 dependencies = [
  "chrono",
- "molten-core 0.0.1",
+ "molten-core",
  "serde",
  "serde_json",
  "thiserror",
 ]
-
-[[package]]
-name = "molten-document"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd4e8821c660f63a5bb3a3ab7f318e3f01059099cb51dda358c333405fd77113"
 
 [[package]]
 name = "molten-migration"
@@ -1689,11 +1673,11 @@ version = "0.0.1"
 dependencies = [
  "anyhow",
  "chrono",
- "molten-config 0.0.1",
- "molten-core 0.0.1",
- "molten-document 0.0.1",
- "molten-storage-seaorm 0.0.1",
- "molten-workflow 0.0.1",
+ "molten-config",
+ "molten-core",
+ "molten-document",
+ "molten-storage-seaorm",
+ "molten-workflow",
  "sea-orm",
  "serde",
  "serde_json",
@@ -1703,18 +1687,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "molten-service"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "93c04cbd726c472cc2b4e3570ed6468a8ba2ab9b125f9ca9d3abcd7bb2bb1e19"
-
-[[package]]
 name = "molten-storage-seaorm"
 version = "0.0.1"
 dependencies = [
  "anyhow",
  "chrono",
- "molten-core 0.0.1",
+ "molten-core",
  "sea-orm",
  "serde",
  "serde_json",
@@ -1722,25 +1700,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "molten-storage-seaorm"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "faa7a5b12571473190a7afd61ffea96896141ba79abf900d079412af1b5a7a6c"
-
-[[package]]
 name = "molten-workflow"
 version = "0.0.1"
 dependencies = [
- "molten-core 0.0.1",
+ "molten-core",
  "serde",
  "thiserror",
 ]
-
-[[package]]
-name = "molten-workflow"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75eb07c51db5ff6e988cffc1d4005cbfae8628b4a4945590fcc7f1a0e2c58bb8"
 
 [[package]]
 name = "nu-ansi-term"
@@ -2211,9 +2177,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.12.2"
+version = "1.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "843bc0191f75f3e22651ae5f1e72939ab2f72a4bc30fa80a066bd66edefc24d4"
+checksum = "e10754a14b9137dd7b1e3e5b0493cc9171fdd105e0ab477f51b72e7f3ac0e276"
 dependencies = [
  "aho-corasick",
  "memchr",

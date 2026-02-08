@@ -14,7 +14,7 @@ use validator::Validate;
 /// **Example JSON:**
 /// ```json
 /// {
-///   "type": "select",
+///   "kind": "select",
 ///   "config": {
 ///     "options": ["A", "B"],
 ///     "allow_multiple": false
@@ -22,7 +22,7 @@ use validator::Validate;
 /// }
 /// ```
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(tag = "type", content = "config", rename_all = "snake_case")]
+#[serde(tag = "kind", content = "config", rename_all = "snake_case")]
 pub enum FieldType {
     /// Standard single-line text input.
     Text,
@@ -223,7 +223,7 @@ mod tests {
         // Adjacently tagged unit variants usually serialize to just the tag object
         // or tag with null config depending on specific serde behavior.
         // Let's verify exact output.
-        assert_eq!(json, json!({ "type": "text" }));
+        assert_eq!(json, json!({ "kind": "text" }));
     }
 
     #[test]
@@ -238,7 +238,7 @@ mod tests {
         assert_eq!(
             json,
             json!({
-                "type": "number",
+                "kind": "number",
                 "config": {
                     "min": 0.0,
                     "max": 100.0
@@ -255,7 +255,7 @@ mod tests {
             "label": "Status",
             "required": true,
             "field_type": {
-                "type": "select",
+                "kind": "select",
                 "config": {
                     "options": ["Open", "Closed"],
                     "allow_multiple": true
@@ -285,7 +285,7 @@ mod tests {
             "id": "score",
             "label": "Score",
             "field_type": {
-                "type": "number",
+                "kind": "number",
                 "config": {}
             }
         });
@@ -310,7 +310,7 @@ mod tests {
         let valid_json = json!({
             "id": "short_id",
             "label": "Valid Label",
-            "field_type": { "type": "text" }
+            "field_type": { "kind": "text" }
         });
         let result: Result<FieldDefinition, _> = serde_json::from_value(valid_json);
         assert!(result.is_ok());
@@ -321,7 +321,7 @@ mod tests {
         let invalid_json = json!({
             "id": long_id,
             "label": "Invalid ID",
-            "field_type": { "type": "text" }
+            "field_type": { "kind": "text" }
         });
         let result: Result<FieldDefinition, _> = serde_json::from_value(invalid_json);
 
@@ -338,7 +338,7 @@ mod tests {
         let invalid_json = json!({
             "id": "this_id_is_an_ok_length",
             "label": long_label,
-            "field_type": { "type": "text" }
+            "field_type": { "kind": "text" }
         });
         let result: Result<FieldDefinition, _> = serde_json::from_value(invalid_json);
 

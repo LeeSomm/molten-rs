@@ -10,7 +10,9 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 
 [dependencies]
-molten-core = { path = "../molten-core" }
+# Internal Crates
+molten-core = { version = "0.0.1", path = "../molten-core" }
+
 chrono = "0.4.43"
 sea-orm = { version = "1.1.19", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros"] }
 serde = { version = "1.0.228", features = ["derive"] }

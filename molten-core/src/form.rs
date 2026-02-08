@@ -1,7 +1,14 @@
 use crate::field::FieldDefinition;
+use once_cell::sync::Lazy;
+use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use validator::{Validate, ValidationError};
+
+// Only alphanumeric, hyphens, and underscores
+static ID_REGEX: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"^[a-zA-Z0-9_-]+$").unwrap()
+});
 
 /// Defines the structure of a Form (the "Table Schema").
 ///
@@ -10,7 +17,8 @@ use validator::{Validate, ValidationError};
 #[serde(try_from = "FormBuilder")]
 pub struct FormDefinition {
     /// The unique identifier for this form (e.g., "incident_report").
-    #[validate(length(min = 1, max = 64))]
+    /// ID must be between 1 and 64 characters with only alhpanumeric, hyphens, and underscores
+    #[validate(length(min = 1, max = 64), regex(path = *ID_REGEX))]
     id: String,
 
     /// Human-readable name (e.g., "Incident Report").
@@ -182,14 +190,14 @@ mod tests {
                     "id": "title",
                     "label": "Title",
                     "field_type": {
-                        "type": "text"
+                        "kind": "text"
                     }
                 },
                 {
                     "id": "severity",
                     "label": "Severity",
                     "field_type": {
-                        "type": "number",
+                        "kind": "number",
                         "config": { "min": 1.0, "max": 5.0 }
                     }
                 }

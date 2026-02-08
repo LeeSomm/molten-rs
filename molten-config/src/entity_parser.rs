@@ -83,14 +83,16 @@ version: 1
 fields:
   - id: title
     label: Incident Title
-    type: text
+    field_type: 
+        kind: text
     required: true
   - id: severity
     label: Severity Level
-    type: number
-    config:
-      min: 1
-      max: 5
+    field_type: 
+        kind: number
+        config:
+            min: 1
+            max: 5
 "#;
 
     #[test]
@@ -110,7 +112,7 @@ fields:
             "name": "Incident Report",
             "version": 1,
             "fields": [
-                { "id": "title", "label": "Title", "type": "text", "required": true }
+                { "id": "title", "label": "Title", "field_type": {"kind": "text"}, "required": true }
             ]
         }"#;
 
@@ -124,7 +126,7 @@ fields:
     fn test_validation_trigger() {
         // Invalid Form (ID has space, which violates regex/validation rules in Core)
         let invalid_yaml = r#"
-id: "incident report" 
+id: incident report 
 name: Report
 fields: []
 "#;
