@@ -1,13 +1,13 @@
 use tokio::net::TcpListener;
 
-use crate::state::AppState;
 use crate::handlers;
+use crate::{error::BuildError, state::AppState};
 use axum::{
     Router,
     http::StatusCode,
     routing::{get, post},
 };
-use molten_config::settings_parser::{Settings, get_configuration};
+use molten_config::settings_parser::Settings;
 use molten_migration::{Migrator, MigratorTrait};
 use sea_orm::{Database, DatabaseConnection, DbErr};
 
@@ -18,17 +18,13 @@ pub struct Application {
 }
 
 impl Application {
-    pub async fn build(config: Settings) -> Result<Self, Error> {
-        //TODO: Make custom error
-        // Get configuration settings
-        let config = get_configuration().expect("Failed to parse configuration settings");
-
+    pub async fn build(config: Settings) -> Result<Self, BuildError> {
         // Connect to Database
         let db: DatabaseConnection = Self::get_db_connection(&config).await?;
         tracing::info!("Connected to database: {}", &config.database.database_name);
 
         // Run migrations
-        Self::run_migrations(&db);
+        Self::run_migrations(&db).await?;
 
         let state = AppState::new(db);
         let addr = format!("{}:{}", config.application.host, config.application.port);
@@ -51,11 +47,11 @@ impl Application {
         self.port
     }
 
-    pub async fn get_db_connection(config: &Settings) -> Result<DatabaseConnection, DbErr> {
+    async fn get_db_connection(config: &Settings) -> Result<DatabaseConnection, DbErr> {
         Database::connect(config.database.get_connect_options()).await
     }
 
-    pub async fn run_migrations(db: &DatabaseConnection) -> Result<(), DbErr> {
+    async fn run_migrations(db: &DatabaseConnection) -> Result<(), DbErr> {
         tracing::info!("Running database migrations...");
         Migrator::up(db, None).await?;
         tracing::info!("Migrations applied successfully.");
@@ -64,7 +60,7 @@ impl Application {
 
     /// Creates the Axum router with all routes and state attached.
     /// This function is now testable without starting a real TCP listener.
-    pub fn define_router(db: DatabaseConnection) -> Router {
+    fn define_router(db: DatabaseConnection) -> Router {
         let state = AppState::new(db);
 
         Router::new()

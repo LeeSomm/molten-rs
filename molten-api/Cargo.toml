@@ -30,4 +30,5 @@ sea-orm = { version = "1.1.19", features = ["sqlx-postgres", "runtime-tokio-rust
 dotenvy = "0.15.7" # To load .env file
 anyhow = "1.0.100"
 tracing-log = "0.2.0"
+thiserror = "2.0.18"
 

@@ -6,26 +6,17 @@ use axum::{
 use molten_config::ConfigError;
 use molten_service::ServiceError;
 use serde_json::json;
+use thiserror::Error;
 
-/// A wrapper to allow us to implement IntoResponse for foreign errors
+/// A wrapper to allow us to implement Http responses for the API
+#[derive(Error, Debug)]
 pub enum ApiError {
     /// Errors generated from calling molten-service functions
-    Service(ServiceError),
+    #[error("molten-service error: {0:?}")]
+    Service(#[from] ServiceError),
     /// Errors generated from calling molten-config functions
-    Config(ConfigError),
-}
-
-// Allow ? operator to auto-convert ServiceError -> ApiError
-impl From<ServiceError> for ApiError {
-    fn from(inner: ServiceError) -> Self {
-        ApiError::Service(inner)
-    }
-}
-
-impl From<ConfigError> for ApiError {
-    fn from(inner: ConfigError) -> Self {
-        ApiError::Config(inner)
-    }
+    #[error("molten-config error: {0:?}")]
+    Config(#[from] ConfigError),
 }
 
 impl IntoResponse for ApiError {
@@ -82,4 +73,13 @@ impl IntoResponse for ApiError {
 
         (status, Json(json!({ "error": message }))).into_response()
     }
+}
+
+#[derive(Debug, Error)]
+pub enum BuildError {
+    #[error("database error during startup")]
+    Database(#[from] sea_orm::DbErr),
+
+    #[error("I/O error during startup")]
+    Io(#[from] std::io::Error),
 }
