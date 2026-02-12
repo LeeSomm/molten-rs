@@ -1,3 +1,4 @@
+//! This module provides the service struct for Document entity operations.
 use crate::error::ServiceError;
 use molten_core::document::Document;
 use molten_core::workflow::WorkflowGraph;
@@ -8,16 +9,35 @@ use serde_json::Value;
 use std::collections::HashMap;
 use uuid::Uuid;
 
+/// Service for managing documents, including creation, validation, and retrieval.
+///
+/// This service orchestrates interactions between document data, form definitions, workflow
+/// definitions, and storage.
 pub struct DocumentService {
     db: DatabaseConnection,
 }
 
 impl DocumentService {
+    /// Creates a new `DocumentService` instance.
+    ///
+    /// # Arguments
+    /// * `db` - A `sea_orm::DatabaseConnection` used for database operations.
     pub fn new(db: DatabaseConnection) -> Self {
         Self { db }
     }
 
-    /// Creates a new document, validates it, and saves it to storage.
+    /// Creates a new document, validates it against its form definition and workflow,
+    /// and saves it to storage.
+    ///
+    /// # Arguments
+    /// * `form_id` - The ID of the form definition the document adheres to.
+    /// * `workflow_id` - The ID of the workflow that governs the document's lifecycle.
+    /// * `data` - The actual data content of the document, as a `HashMap<String, Value>`.
+    ///
+    /// # Returns
+    /// A `Result` which is `Ok(Document)` if the document was successfully created and
+    /// persisted, or `Err(ServiceError)` if an error occurred during validation,
+    /// configuration fetching, or database operations.
     ///
     /// # Steps
     /// 1. Fetch Form Definition (to check schema).
@@ -73,7 +93,14 @@ impl DocumentService {
         Ok(doc)
     }
 
-    /// Retrieves a document by ID.
+    /// Retrieves a document by its unique identifier.
+    ///
+    /// # Arguments
+    /// * `id` - The unique ID of the document to retrieve.
+    ///
+    /// # Returns
+    /// A `Result` which is `Ok(Document)` if the document is found, or `Err(ServiceError)`
+    /// if the document is not found or a database error occurs.
     pub async fn get_document(&self, id: &str) -> Result<Document, ServiceError> {
         DocumentRepository::find_by_id(&self.db, id)
             .await

@@ -1,16 +1,30 @@
+//! This module provides the core logic for validating a `Document` against its
+//! corresponding `FormDefinition`.
+//!
+//! It includes functions to perform comprehensive checks on document data,
+//! ensuring that all required fields are present, data types match, and
+//! specific constraints (like numerical ranges or selection options) are met.
 use crate::error::DocumentValidationError;
 use molten_core::document::Document;
 use molten_core::field::{FieldDefinition, FieldType};
 use molten_core::form::FormDefinition;
 use serde_json::Value;
 
-/// Validates a Document against its FormDefinition.
+/// Validates a `Document` against its `FormDefinition`.
 ///
-/// This function performs a comprehensive check:
-/// 1. Ensures the Document belongs to this Form.
-/// 2. Checks all `required` fields are present.
-/// 3. Validates that data types match (e.g., Number is actually a Number).
-/// 4. Validates specific constraints (Min/Max, Regex, Select Options).
+/// This function performs a comprehensive check, ensuring:
+/// 1. The `Document`'s `form_id` matches the `FormDefinition`'s ID.
+/// 2. All `required` fields as defined in the `FormDefinition` are present and not null in the `Document`.
+/// 3. Data types for each field in the `Document` match the `FieldType` specified in the `FormDefinition`.
+/// 4. Specific constraints (e.g., `min`/`max` for numbers, `options` for selects, ISO 8601 for dates) are met.
+///
+/// # Arguments
+/// * `doc` - A reference to the `Document` to be validated.
+/// * `form` - A reference to the `FormDefinition` to validate against.
+///
+/// # Returns
+/// A `Result` which is `Ok(())` if the document is valid, or `Err(Vec<DocumentValidationError>)`
+/// containing a list of all validation errors found.
 pub fn validate_document(
     doc: &Document,
     form: &FormDefinition,
@@ -55,7 +69,19 @@ pub fn validate_document(
     }
 }
 
-/// Validates a single value against a field definition.
+/// Validates a single `serde_json::Value` against a `FieldDefinition`.
+///
+/// This private helper function checks the value's type and applies any constraints
+/// specified in the `FieldDefinition` (e.g., numerical ranges, valid selection options,
+/// or date format).
+///
+/// # Arguments
+/// * `value` - A reference to the `serde_json::Value` to validate.
+/// * `field` - A reference to the `FieldDefinition` to validate against.
+///
+/// # Returns
+/// A `Result` which is `Ok(())` if the value is valid according to the field definition,
+/// or `Err(DocumentValidationError)` if any validation rule is violated.
 fn validate_value(value: &Value, field: &FieldDefinition) -> Result<(), DocumentValidationError> {
     match field.field_type() {
         FieldType::Text | FieldType::TextArea => {
@@ -175,6 +201,13 @@ fn validate_value(value: &Value, field: &FieldDefinition) -> Result<(), Document
     Ok(())
 }
 
+/// Helper function to get a string representation of a `serde_json::Value`'s type.
+///
+/// # Arguments
+/// * `v` - A reference to the `serde_json::Value`.
+///
+/// # Returns
+/// A `String` representing the JSON type (e.g., "String", "Number", "Boolean", "Null", "Array", "Object").
 fn get_json_type(v: &Value) -> String {
     match v {
         Value::Null => "Null",

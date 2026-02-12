@@ -11,7 +11,11 @@
 pub mod error;
 pub mod services;
 
+/// Re-exports of the service error types.
 pub use error::ServiceError;
+/// Re-exports of the Document service.
 pub use services::DocumentService;
+/// Re-exports of the Form service.
 pub use services::FormService;
+/// Re-exports of the Workflow service.
 pub use services::WorkflowService;

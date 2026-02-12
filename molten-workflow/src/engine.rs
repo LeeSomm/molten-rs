@@ -1,19 +1,33 @@
+//! This module provides the functions which implement the core workflow engine logic.
+
 use crate::error::WorkflowError;
 use molten_core::document::Document;
 use molten_core::workflow::{WorkflowDefinition, WorkflowGraph};
 
-/// Attempts to transition a document from its current phase to a target phase.
+/// Attempts to transition a document from its current phase to a specified target phase
+/// according to the rules defined in the provided workflow.
 ///
-/// If successful, the `document.current_phase` is updated in place.
+/// If the transition is valid, the `document.current_phase` field is updated in place
+/// to the `target_phase_id`.
+///
+/// This function performs several checks:
+/// 1. Verifies that the document's `workflow_id` matches the provided `workflow.id()`.
+/// 2. Ensures the `target_phase_id` actually exists within the `workflow` definition.
+/// 3. Handles initial transitions for new documents (those with an empty `current_phase`),
+///    only allowing them to transition to the workflow's designated "Start" phase.
+/// 4. Validates that a direct transition path exists from the document's `current_phase`
+///    to the `target_phase_id` within the `workflow` graph.
 ///
 /// # Arguments
-/// * `doc` - The mutable document to transition.
-/// * `workflow` - The workflow definition that governs this document.
-/// * `target_phase_id` - The ID of the phase to move to.
+/// * `doc` - A mutable reference to the `Document` to be transitioned.
+/// * `workflow` - The `WorkflowDefinition` that defines the valid phases and transitions
+///   for this document.
+/// * `target_phase_id` - The `id` of the phase to which the document should transition.
 ///
 /// # Returns
-/// * `Ok(())` if the transition was successful.
-/// * `Err(WorkflowError)` if the rule was violated.
+/// * `Ok(())` if the transition was successful and the document's phase was updated.
+/// * `Err(WorkflowError)` if any of the validation checks fail (e.g., workflow mismatch,
+///   unknown phase, invalid transition, or no current phase on a non-new document).
 pub fn transition(
     doc: &mut Document,
     workflow: &WorkflowDefinition,

@@ -1,12 +1,28 @@
+//! Repository implementation for interacting with Form entities in the database.
+
 use crate::entities::form;
 use crate::entities::form::Entity as FormEntity;
 use anyhow::Result;
 use molten_core::form::FormDefinition;
 use sea_orm::{DatabaseConnection, EntityTrait, Set};
 
+/// Repository for `FormDefinition` entities, providing CRUD operations.
+///
+/// This struct acts as a data access layer for form definitions, abstracting the underlying
+/// SeaORM implementation.
 pub struct FormRepository;
 
 impl FormRepository {
+    /// Saves a `FormDefinition` to the database.
+    ///
+    /// If a form with the same ID already exists, it will be updated.
+    ///
+    /// # Arguments
+    /// * `db` - A reference to the `DatabaseConnection`.
+    /// * `def` - A reference to the `FormDefinition` domain model to be saved.
+    ///
+    /// # Returns
+    /// `Result<()>` indicating success or failure.
     pub async fn save(db: &DatabaseConnection, def: &FormDefinition) -> Result<()> {
         // We store the *entire* definition as JSON, but also pull out
         // name/version for SQL columns.
@@ -38,6 +54,15 @@ impl FormRepository {
         Ok(())
     }
 
+    /// Retrieves a `FormDefinition` by its ID.
+    ///
+    /// # Arguments
+    /// * `db` - A reference to the `DatabaseConnection`.
+    /// * `id` - The ID of the form definition to retrieve.
+    ///
+    /// # Returns
+    /// `Result<Option<FormDefinition>>` where `Some(FormDefinition)` is returned if found,
+    /// `None` if not found, or an `Err` if a database error occurs.
     pub async fn find_by_id(db: &DatabaseConnection, id: &str) -> Result<Option<FormDefinition>> {
         let model = FormEntity::find_by_id(id).one(db).await?;
 

@@ -8,5 +8,7 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
+/// Provides SeaORM entity definitions for various Molten data structures.
 pub mod entities;
+/// Provides repository implementations for interacting with Molten entities in the database.
 pub mod repo;

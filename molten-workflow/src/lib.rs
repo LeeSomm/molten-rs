@@ -7,8 +7,12 @@
 //! If this crate has been abandoned, please message me and we can discuss ownership transfer.
 
 #![warn(missing_docs)]
+/// Provides the core workflow engine logic, including the `transition` function.
 pub mod engine;
+/// Defines custom error types specific to workflow operations.
 pub mod error;
 
+/// Re-exports the main workflow transition function from the `engine` module.
 pub use engine::transition;
+/// Re-exports the `WorkflowError` enum from the `error` module.
 pub use error::WorkflowError;

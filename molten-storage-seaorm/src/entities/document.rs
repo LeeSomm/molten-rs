@@ -1,35 +1,46 @@
+//! This module provides the SeaORM entity definition for Documents.
+
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
+/// Represents a document entity stored in the database.
+///
+/// This struct defines the database model for a document, including its unique identifier,
+/// associated form and workflow IDs, current phase, and dynamic data.
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Serialize, Deserialize)]
 #[sea_orm(table_name = "documents")]
 pub struct Model {
-    /// UUID string
+    /// The unique identifier for the document. This is a UUID string.
     #[sea_orm(primary_key, auto_increment = false)]
     pub id: String,
 
-    /// Foreign Key to forms table
+    /// The foreign key linking to the associated form definition.
     #[sea_orm(index)]
     pub form_id: String,
 
-    /// Foreign Key to workflows table
+    /// The foreign key linking to the associated workflow definition.
     #[sea_orm(index)]
     pub workflow_id: String,
 
-    /// Critical for fast workflow dashboards.
+    /// The current phase of the document within its workflow.
+    /// Critical for fast workflow dashboards and querying.
     #[sea_orm(index)]
     pub current_phase: String,
 
-    /// The dynamic user data (key-value pairs).
+    /// The dynamic user-defined data associated with the document, stored as JSON.
     #[sea_orm(column_type = "JsonBinary")]
     pub data: Json,
 
+    /// The timestamp when the document was created.
     pub created_at: DateTimeUtc,
+    /// The timestamp when the document was last updated.
     pub updated_at: DateTimeUtc,
 }
 
+/// Defines relationships for the document entity.
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
+    /// Establishes a many-to-one relationship with the `Form` entity.
     #[sea_orm(
         belongs_to = "super::form::Entity",
         from = "Column::FormId",
@@ -39,6 +50,7 @@ pub enum Relation {
     )]
     Form,
 
+    /// Establishes a many-to-one relationship with the `Workflow` entity.
     #[sea_orm(
         belongs_to = "super::workflow::Entity",
         from = "Column::WorkflowId",

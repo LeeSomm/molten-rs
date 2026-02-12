@@ -25,12 +25,5 @@ pub use molten_core::*;
 pub use molten_document::*;
 pub use molten_service::*;
 pub use molten_workflow::*;
-
-// Re-export entire modules for advanced users
-pub mod config {
-    pub use molten_config::*;
-}
-
-pub mod storage {
-    pub use molten_storage_seaorm::*;
-}
+pub use molten_config::*;
+pub use molten_storage_seaorm::*;
