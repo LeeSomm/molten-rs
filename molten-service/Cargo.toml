@@ -1,6 +1,6 @@
 [package]
 name = "molten-service"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 license = "Apache-2.0"
 description = "Application orchestration and business logic layer for Molten"
@@ -11,11 +11,11 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
 # Internal Crates
-molten-core = { version = "0.0.1", path = "../molten-core" }
-molten-config = { version = "0.0.1", path = "../molten-config" }
-molten-document = { version = "0.0.1", path = "../molten-document" }
-molten-workflow = { version = "0.0.1", path = "../molten-workflow" }
-molten-storage-seaorm = { version = "0.0.1", path = "../molten-storage-seaorm" }
+molten-core = { version = "0.0.2", path = "../molten-core" }
+molten-config = { version = "0.0.2", path = "../molten-config" }
+molten-document = { version = "0.0.2", path = "../molten-document" }
+molten-workflow = { version = "0.0.2", path = "../molten-workflow" }
+molten-storage-seaorm = { version = "0.0.2", path = "../molten-storage-seaorm" }
 
 anyhow = "1.0.100"
 chrono = "0.4.43"

@@ -1,6 +1,6 @@
 [package]
 name = "molten"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 license = "Apache-2.0"
 description = "A configurable document and workflow management system"
@@ -9,9 +9,9 @@ documentation = "https://docs.rs/molten"
 homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
-molten-config = { version = "0.0.1", path = "../molten-config" }
-molten-core = { version = "0.0.1", path = "../molten-core" }
-molten-document = { version = "0.0.1", path = "../molten-document" }
-molten-service = { version = "0.0.1", path = "../molten-service" }
-molten-storage-seaorm = { version = "0.0.1", path = "../molten-storage-seaorm" }
-molten-workflow = { version = "0.0.1", path = "../molten-workflow" }
+molten-config = { version = "0.0.2", path = "../molten-config" }
+molten-core = { version = "0.0.2", path = "../molten-core" }
+molten-document = { version = "0.0.2", path = "../molten-document" }
+molten-service = { version = "0.0.2", path = "../molten-service" }
+molten-storage-seaorm = { version = "0.0.2", path = "../molten-storage-seaorm" }
+molten-workflow = { version = "0.0.2", path = "../molten-workflow" }

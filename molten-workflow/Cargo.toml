@@ -1,6 +1,6 @@
 [package]
 name = "molten-workflow"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 license = "Apache-2.0"
 description = "Workflow state machine engine and transition management for Molten"
@@ -10,6 +10,6 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 
 [dependencies]
-molten-core = { path = "../molten-core" }
+molten-core = { version = "0.0.2", path = "../molten-core" }
 serde = "1.0.228"
 thiserror = "2.0.18"

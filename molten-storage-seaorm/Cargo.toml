@@ -1,6 +1,6 @@
 [package]
 name = "molten-storage-seaorm"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 license = "Apache-2.0"
 description = "SeaORM database persistence implementation for Molten"
@@ -11,7 +11,7 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 
 [dependencies]
 # Internal Crates
-molten-core = { version = "0.0.1", path = "../molten-core" }
+molten-core = { version = "0.0.2", path = "../molten-core" }
 
 chrono = "0.4.43"
 sea-orm = { version = "1.1.19", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros"] }
