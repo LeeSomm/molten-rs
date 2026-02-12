@@ -12,7 +12,6 @@ use axum::{
     routing::{get, post},
 };
 use molten_config::settings_parser::Settings;
-use molten_migration::{Migrator, MigratorTrait};
 use sea_orm::{Database, DatabaseConnection, DbErr};
 
 /// Represents the Molten API application, encapsulating the server's network listener,
@@ -37,9 +36,6 @@ impl Application {
         // Connect to Database
         let db: DatabaseConnection = Self::get_db_connection(&config).await?;
         tracing::info!("Connected to database: {}", &config.database.database_name);
-
-        // Run migrations
-        Self::run_migrations(&db).await?;
 
         let state = AppState::new(db);
         let addr = format!("{}:{}", config.application.host, config.application.port);
@@ -72,21 +68,6 @@ impl Application {
     /// or `Err` with a `DbErr` if the connection fails.
     async fn get_db_connection(config: &Settings) -> Result<DatabaseConnection, DbErr> {
         Database::connect(config.database.get_connect_options()).await
-    }
-
-    /// Runs any pending database migrations.
-    ///
-    /// # Arguments
-    /// * `db` - A reference to the database connection.
-    ///
-    /// # Returns
-    /// A `Result` which is `Ok` if migrations are applied successfully,
-    /// or `Err` with a `DbErr` if an error occurs during migration.
-    async fn run_migrations(db: &DatabaseConnection) -> Result<(), DbErr> {
-        tracing::info!("Running database migrations...");
-        Migrator::up(db, None).await?;
-        tracing::info!("Migrations applied successfully.");
-        Ok(())
     }
 
     /// Creates the Axum router with all routes and state attached.

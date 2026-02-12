@@ -1602,15 +1602,12 @@ dependencies = [
  "dotenvy",
  "molten-config",
  "molten-core",
- "molten-migration",
  "molten-service",
- "molten-storage-seaorm",
  "sea-orm",
  "serde",
  "serde_json",
  "thiserror",
  "tokio",
- "tower-http",
  "tracing",
  "tracing-log",
  "tracing-subscriber",
@@ -1644,7 +1641,6 @@ dependencies = [
  "regex",
  "serde",
  "serde_json",
- "thiserror",
  "validator",
 ]
 
@@ -1672,14 +1668,11 @@ name = "molten-service"
 version = "0.0.2"
 dependencies = [
  "anyhow",
- "chrono",
- "molten-config",
  "molten-core",
  "molten-document",
  "molten-storage-seaorm",
  "molten-workflow",
  "sea-orm",
- "serde",
  "serde_json",
  "thiserror",
  "uuid",
@@ -1696,7 +1689,6 @@ dependencies = [
  "sea-orm",
  "serde",
  "serde_json",
- "tokio",
 ]
 
 [[package]]
@@ -1704,7 +1696,6 @@ name = "molten-workflow"
 version = "0.0.2"
 dependencies = [
  "molten-core",
- "serde",
  "thiserror",
 ]
 
@@ -2444,6 +2435,9 @@ dependencies = [
  "dotenvy",
  "glob",
  "regex",
+ "sea-schema",
+ "sqlx",
+ "tokio",
  "tracing",
  "tracing-subscriber",
  "url",
@@ -2534,7 +2528,9 @@ checksum = "2239ff574c04858ca77485f112afea1a15e53135d3097d0c86509cef1def1338"
 dependencies = [
  "futures",
  "sea-query",
+ "sea-query-binder",
  "sea-schema-derive",
+ "sqlx",
 ]
 
 [[package]]
@@ -3312,22 +3308,6 @@ dependencies = [
  "pin-project-lite",
  "sync_wrapper",
  "tokio",
- "tower-layer",
- "tower-service",
- "tracing",
-]
-
-[[package]]
-name = "tower-http"
-version = "0.6.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4e6559d53cc268e5031cd8429d05415bc4cb4aefc4aa5d6cc35fbf5b924a1f8"
-dependencies = [
- "bitflags",
- "bytes",
- "http",
- "http-body",
- "pin-project-lite",
  "tower-layer",
  "tower-service",
  "tracing",

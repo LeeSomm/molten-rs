@@ -12,14 +12,11 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 # Internal Crates
 molten-core = { version = "0.0.2", path = "../molten-core" }
 molten-service = { version = "0.0.2", path = "../molten-service" }
-molten-storage-seaorm = { version = "0.0.2", path = "../molten-storage-seaorm" }
 molten-config = { version = "0.0.2", path = "../molten-config" }
-molten-migration = { version = "0.1.0", path = "../molten-migration" }
 
 # Web Framework
 axum = { version = "0.8.8", features = ["macros"] }
 tokio = { version = "1.49.0", features = ["full"] }
-tower-http = { version = "0.6.8", features = ["trace", "cors"] }
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
 
