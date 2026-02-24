@@ -12,3 +12,5 @@
 pub mod entities;
 /// Provides repository implementations for interacting with Molten entities in the database.
 pub mod repo;
+
+pub use sea_orm;

@@ -11,9 +11,9 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 [dependencies]
 # Internal Crates
 molten-core = { version = "0.0.2", path = "../molten-core" }
+molten-storage-seaorm = { version = "0.0.2", path = "../molten-storage-seaorm" }
 
 config = "0.15.19"
-sea-orm = "1.1.19"
 secrecy = { version = "0.10.3", features = ["serde"] }
 serde = "1.0.228"
 serde-aux = "4.7.0"

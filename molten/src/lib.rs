@@ -21,9 +21,9 @@
 
 #![warn(missing_docs)]
 // Re-export the most commonly used types
+pub use molten_config::*;
 pub use molten_core::*;
 pub use molten_document::*;
 pub use molten_service::*;
-pub use molten_workflow::*;
-pub use molten_config::*;
 pub use molten_storage_seaorm::*;
+pub use molten_workflow::*;

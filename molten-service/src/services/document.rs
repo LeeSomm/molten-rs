@@ -4,7 +4,7 @@ use molten_core::document::Document;
 use molten_core::workflow::WorkflowGraph;
 use molten_document::validate_document;
 use molten_storage_seaorm::repo::{DocumentRepository, FormRepository, WorkflowRepository};
-use sea_orm::DatabaseConnection;
+use molten_storage_seaorm::sea_orm::DatabaseConnection;
 use serde_json::Value;
 use std::collections::HashMap;
 use uuid::Uuid;

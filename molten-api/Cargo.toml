@@ -13,6 +13,7 @@ homepage = "https://github.com/LeeSomm/molten-rs"
 molten-core = { version = "0.0.2", path = "../molten-core" }
 molten-service = { version = "0.0.2", path = "../molten-service" }
 molten-config = { version = "0.0.2", path = "../molten-config" }
+molten-storage-seaorm = { version = "0.0.2", path = "../molten-storage-seaorm" }
 
 # Web Framework
 axum = { version = "0.8.8", features = ["macros"] }
@@ -28,4 +29,3 @@ dotenvy = "0.15.7" # To load .env file
 anyhow = "1.0.100"
 tracing-log = "0.2.0"
 thiserror = "2.0.18"
-

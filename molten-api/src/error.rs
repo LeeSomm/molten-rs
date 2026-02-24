@@ -11,6 +11,7 @@ use axum::{
 };
 use molten_config::ConfigError;
 use molten_service::ServiceError;
+use molten_storage_seaorm::sea_orm::DbErr;
 use serde_json::json;
 use thiserror::Error;
 
@@ -88,7 +89,7 @@ impl IntoResponse for ApiError {
 pub enum BuildError {
     /// Errors generated during startup from database operations
     #[error("database error during startup")]
-    Database(#[from] sea_orm::DbErr),
+    Database(#[from] DbErr),
 
     /// Errors generated during startup from running the application
     #[error("I/O error during startup")]

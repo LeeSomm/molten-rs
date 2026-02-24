@@ -5,7 +5,7 @@
 //! function to load these settings, allowing for flexible and environment-aware
 //! application configuration.
 use crate::ConfigError;
-use sea_orm::ConnectOptions;
+use molten_storage_seaorm::sea_orm::ConnectOptions;
 /// Runtime configuration parser
 use secrecy::{ExposeSecret, SecretString};
 use serde_aux::field_attributes::deserialize_number_from_string;

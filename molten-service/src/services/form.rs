@@ -3,7 +3,7 @@
 use crate::error::ServiceError;
 use molten_core::FormDefinition;
 use molten_storage_seaorm::repo::FormRepository;
-use sea_orm::DatabaseConnection;
+use molten_storage_seaorm::sea_orm::DatabaseConnection;
 
 /// Service for managing form definitions.
 ///

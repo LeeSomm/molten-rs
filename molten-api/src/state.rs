@@ -4,7 +4,7 @@
 //! such as the database connection and service clients, making them
 //! accessible to all request handlers.
 use molten_service::{DocumentService, FormService, WorkflowService};
-use sea_orm::DatabaseConnection;
+use molten_storage_seaorm::sea_orm::DatabaseConnection;
 use std::sync::Arc;
 
 /// The shared state accessible by all request handlers.

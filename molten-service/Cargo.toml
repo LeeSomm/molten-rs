@@ -17,7 +17,6 @@ molten-workflow = { version = "0.0.2", path = "../molten-workflow" }
 molten-storage-seaorm = { version = "0.0.2", path = "../molten-storage-seaorm" }
 
 anyhow = "1.0.100"
-sea-orm = "1.1.19"
 serde_json = "1.0.149"
 thiserror = "2.0.18"
 uuid = { version = "1.20.0", features = ["v4"] }

@@ -12,7 +12,7 @@ use axum::{
     routing::{get, post},
 };
 use molten_config::settings_parser::Settings;
-use sea_orm::{Database, DatabaseConnection, DbErr};
+use molten_storage_seaorm::sea_orm::{Database, DatabaseConnection, DbErr};
 
 /// Represents the Molten API application, encapsulating the server's network listener,
 /// application-wide state, and the port it is bound to.

@@ -11,7 +11,7 @@ use thiserror::Error;
 pub enum ServiceError {
     /// An error occurred during a database operation.
     #[error("Database error: {0}")]
-    DatabaseError(#[from] sea_orm::DbErr),
+    DatabaseError(#[from] molten_storage_seaorm::sea_orm::DbErr),
 
     /// A requested form definition was not found.
     #[error("Form definition not found: {0}")]
